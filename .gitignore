@@ -1,0 +1,25 @@
+# Dependências de pacotes
+node_modules/
+target/
+build/
+
+# IDEs
+.idea/
+.vscode/
+
+# Sistema operacional
+.DS_Store     # macOS
+Thumbs.db      # Windows
+
+# Arquivos de log
+*.log
+
+# Arquivos binários
+*.exe
+*.dll
+*.so
+
+# Arquivos de configuração do ambiente local
+.env
+ormconfig.*
+
