@@ -18,7 +18,7 @@ export class Batalhao {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column({ length: 100 })
   nome: string;
 
   @CreateDateColumn({ name: "data_criacao" })

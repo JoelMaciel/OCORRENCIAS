@@ -25,7 +25,7 @@ export class Ocorrencia {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ name: "m_ocorrencia" })
+  @Column({ name: "m_ocorrencia", length: 30 })
   mOcorrencia: string;
 
   @Column({ name: "data_hora_inicial" })
@@ -34,10 +34,10 @@ export class Ocorrencia {
   @Column({ name: "data_hora_final" })
   dataHoraFinal: Date;
 
-  @Column()
+  @Column({ length: 100 })
   tipoOcorrencia: string;
 
-  @Column()
+  @Column({ length: 50 })
   artigo: string;
 
   @Column({ type: "text" })
@@ -86,12 +86,12 @@ export class Ocorrencia {
   @OneToMany(() => VeiculoApreendido, (veiculo) => veiculo.ocorrencia)
   veiculos: VeiculoApreendido[];
 
-  @Column({ name: "delegacia_destino" })
+  @Column({ name: "delegacia_destino", length: 30 })
   delegaciaDestino: string;
 
-  @Column({ name: "delegado_responsavel" })
+  @Column({ name: "delegado_responsavel", length: 100 })
   delegadoResponsavel: string;
 
-  @Column({ name: "numero_procedimento" })
+  @Column({ name: "numero_procedimento", length: 50 })
   numeroProcedimento: string;
 }
