@@ -1,0 +1,53 @@
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToMany,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
+import { Ocorrencia } from "./Ocorrencia";
+import { CorpoGuarda } from "./CorpoGuarda";
+import { Usuario } from "./Usuario";
+import { Batalhao } from "./Batalhao";
+
+@Entity("policiais")
+export class Policial {
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
+
+  @Column()
+  nome: string;
+
+  @Column()
+  matricula: string;
+
+  @Column({ name: "posto_graduacao" })
+  postoGraduacao: string;
+
+  @CreateDateColumn({ name: "created_at" })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: "updated_at" })
+  updatedAt: Date;
+
+  @ManyToMany(() => Batalhao, (batalhao) => batalhao.policiais)
+  batalhoes: Batalhao[];
+
+  @ManyToMany(() => CorpoGuarda, (guarda) => guarda.policiais)
+  guardas: CorpoGuarda[];
+
+  @OneToMany(() => Ocorrencia, (ocorrencia) => ocorrencia.registradoPor)
+  ocorrenciasRegistradas: Ocorrencia[];
+
+  @OneToMany(() => CorpoGuarda, (guarda) => guarda.comandante)
+  comandanteDeGuarda: CorpoGuarda[];
+
+  @ManyToMany(() => Ocorrencia, (ocorrencia) => ocorrencia.policiaisEnvolvidos)
+  ocorrenciasEnvolvidas: Ocorrencia[];
+
+  @OneToOne(() => Usuario, (usuario) => usuario.policial)
+  usuario: Usuario;
+}
