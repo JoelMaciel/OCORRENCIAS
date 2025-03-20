@@ -18,13 +18,13 @@ export class Policial {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column({ length: 100 })
   nome: string;
 
-  @Column()
+  @Column({ length: 30 })
   matricula: string;
 
-  @Column({ name: "posto_graduacao" })
+  @Column({ name: "posto_graduacao", length: 30 })
   postoGraduacao: string;
 
   @CreateDateColumn({ name: "created_at" })

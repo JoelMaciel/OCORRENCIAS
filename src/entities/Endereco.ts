@@ -12,25 +12,25 @@ export class Endereco {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column({ length: 100 })
   rua: string;
 
-  @Column()
+  @Column({ length: 20 })
   numero: string;
 
-  @Column()
+  @Column({ length: 150, nullable: true })
   complemento: string;
 
-  @Column()
+  @Column({ length: 80 })
   bairro: string;
 
-  @Column()
+  @Column({ length: 80 })
   cidade: string;
 
-  @Column({ name: "uf" })
+  @Column({ name: "uf", length: 3 })
   uf: string;
 
-  @Column()
+  @Column({ length: 20 })
   cep: string;
 
   @CreateDateColumn({ name: "created_at" })

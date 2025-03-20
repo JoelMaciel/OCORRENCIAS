@@ -14,13 +14,13 @@ export class Arma {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column({ length: 80 })
   tipo: string;
 
-  @Column()
+  @Column({ length: 25 })
   calibre: string;
 
-  @Column()
+  @Column({ length: 80 })
   numeracao: string;
 
   @CreateDateColumn({ name: "created-at" })

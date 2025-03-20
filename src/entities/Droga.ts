@@ -15,10 +15,10 @@ export class Droga {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column({ length: 100 })
   tipo: string;
 
-  @Column()
+  @Column({ length: 25 })
   quantidade: string;
 
   @Column({ name: "unidade_medida", type: "enum", enum: UnidadeMedida })

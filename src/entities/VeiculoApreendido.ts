@@ -14,16 +14,16 @@ export class VeiculoApreendido {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column({ length: 20 })
   placa: string;
 
-  @Column()
+  @Column({ length: 30 })
   modelo: string;
 
-  @Column()
+  @Column({ length: 20 })
   cor: string;
 
-  @Column()
+  @Column({ length: 200 })
   situacao: string;
 
   @CreateDateColumn({ name: "created_at" })
