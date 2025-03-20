@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import express from "express";
-import { AppDataSource } from "./ormconfig";
+import { AppDataSource } from "../ormconfig";
 const app = express();
 app.use(express.json());
 
