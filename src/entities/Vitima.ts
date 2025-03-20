@@ -15,25 +15,25 @@ export class Vitima {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column({ length: 100 })
   nome: string;
 
-  @Column()
+  @Column({ length: 20 })
   cpf: string;
 
-  @Column({ name: "data_nascimento" })
+  @Column({ name: "data_nascimento", length: 20 })
   dataNascimento: string;
 
-  @Column({ name: "nome_mae" })
+  @Column({ name: "nome_mae", length: 100 })
   nomeMae: string;
 
-  @Column({ name: "nome_pai" })
+  @Column({ name: "nome_pai", length: 100 })
   nomePai: string;
 
-  @Column()
+  @Column({ length: 30 })
   naturalidade: string;
 
-  @Column()
+  @Column({ length: 30 })
   nacionalidade: string;
 
   @CreateDateColumn({ name: "created_at" })

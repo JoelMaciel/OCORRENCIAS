@@ -6,19 +6,19 @@ export class Viatura {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column({ length: 20 })
   prefixo: string;
 
-  @Column()
+  @Column({ length: 20 })
   placa: string;
 
-  @Column()
+  @Column({ length: 30 })
   modelo: string;
 
-  @Column({ name: "unidade_policiamento" })
+  @Column({ name: "unidade_policiamento", length: 30 })
   unidadePoliciamento: string;
 
-  @Column()
+  @Column({ length: 20 })
   status: string;
 
   @OneToOne(() => Ocorrencia)
