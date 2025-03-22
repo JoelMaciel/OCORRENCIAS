@@ -1,4 +1,3 @@
-import { singleton } from "tsyringe";
 import { IViaturaRepository } from "./interfaces/IViaturaRepository";
 import { AppDataSource } from "../../../../ormconfig";
 import { Viatura } from "../entities/Viatura";
