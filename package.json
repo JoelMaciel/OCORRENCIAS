@@ -17,12 +17,14 @@
         "express": "^4.21.2",
         "pg": "^8.14.1",
         "reflect-metadata": "^0.2.2",
+        "tsyringe": "^4.8.0",
         "typeorm": "^0.3.21",
         "uuid": "^11.1.0"
     },
     "devDependencies": {
+        "@types/connect": "^3.4.38",
         "@types/express": "^5.0.1",
-        "@types/node": "^22.13.10",
+        "@types/node": "^22.13.11",
         "nodemon": "^3.1.9",
         "ts-node": "^10.9.2",
         "tsconfig-paths": "^4.2.0",
