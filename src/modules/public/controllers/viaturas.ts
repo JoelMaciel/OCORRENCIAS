@@ -9,7 +9,7 @@ import { AtualizarViaturaUseCase } from "../usecases/viatura/atualizar-viatura";
 import { IUpdateViaturaDTO } from "../dtos/IUpdateViaturaDTO";
 import { BuscarViaturaUseCase } from "../usecases/viatura/buscar-viatura";
 import { DeletarViaturaUseCase } from "../usecases/viatura/deletar-viatura";
-import { ValidateDTO } from "../usecases/validation/ValidateDto";
+import { ValidateDTO } from "../dtos/validation/ValidateDTO";
 
 export class ViaturasController {
   constructor() {

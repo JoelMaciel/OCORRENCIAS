@@ -45,7 +45,7 @@ export class Vitima {
   @OneToOne(() => Ocorrencia)
   ocorrencia: Ocorrencia;
 
-  @OneToOne(() => Endereco)
+  @OneToOne(() => Endereco, { cascade: true, eager: true })
   @JoinColumn()
   endereco: Endereco;
 }

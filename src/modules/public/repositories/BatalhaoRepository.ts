@@ -10,4 +10,16 @@ export class BatalhaoRepository implements IBatalhaoRepository {
     const batalhao = this.batalhaoRepository.create(data);
     return await this.batalhaoRepository.save(batalhao);
   }
+
+  public async findById(id: string): Promise<Batalhao | null> {
+    return await this.batalhaoRepository.findOne({
+      where: {
+        id: id,
+      },
+    });
+  }
+
+  public async delete(id: string): Promise<void> {
+    await this.batalhaoRepository.delete(id);
+  }
 }
