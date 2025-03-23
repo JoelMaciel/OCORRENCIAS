@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import { IViaturaRepository } from "../repositories/interfaces/IViaturaRepository";
-import { Viatura } from "../entities/Viatura";
+import { Viatura } from "../../entities/Viatura";
+import { IViaturaRepository } from "../../repositories/interfaces/IViaturaRepository";
 
 @injectable()
 export class ListarViaturasUseCase {

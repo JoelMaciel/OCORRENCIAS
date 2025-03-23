@@ -1,29 +1,24 @@
 import { Request, Response, NextFunction } from "express";
 import { container } from "tsyringe";
-import { CriarViaturaUseCase } from "../usecases/criar-viatura";
-import { DeletarViaturaUseCase } from "../usecases/deletar-viatura";
-import { BuscarViaturaUseCase } from "../usecases/buscar-viatura";
+
 import { plainToInstance } from "class-transformer";
+import { CriarViaturaUseCase } from "../usecases/viatura/criar-viatura";
 import { ICreateViaturaDTO } from "../dtos/ICreateViaturaDTO";
-import { ValidationService } from "../usecases/validation/ValidationService";
-import { ListarViaturasUseCase } from "../usecases/listar-viaturas";
+import { ListarViaturasUseCase } from "../usecases/viatura/listar-viaturas";
+import { AtualizarViaturaUseCase } from "../usecases/viatura/atualizar-viatura";
 import { IUpdateViaturaDTO } from "../dtos/IUpdateViaturaDTO";
-import { AtualizarViaturaUseCase } from "../usecases/atualizar-viatura";
+import { BuscarViaturaUseCase } from "../usecases/viatura/buscar-viatura";
+import { DeletarViaturaUseCase } from "../usecases/viatura/deletar-viatura";
+import { ValidateDTO } from "../dtos/validation/ValidateDTO";
 
 export class ViaturasController {
-  constructor() {
-    this.create = this.create.bind(this);
-    this.delete = this.delete.bind(this);
-    this.buscarViatura = this.buscarViatura.bind(this);
-  }
-
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const criarViaturaUseCase = container.resolve(CriarViaturaUseCase);
 
       const dto = plainToInstance(ICreateViaturaDTO, req.body);
 
-      await ValidationService.validate(dto);
+      await ValidateDTO.validate(dto);
 
       const newViatura = await criarViaturaUseCase.execute(dto);
       res.status(201).json(newViatura);
@@ -32,18 +27,18 @@ export class ViaturasController {
     }
   }
 
-  async listar(req: Request, resp: Response, next: NextFunction): Promise<void> {
+  async findAll(req: Request, resp: Response, next: NextFunction): Promise<void> {
     const listarViaturasUse = container.resolve(ListarViaturasUseCase);
     const viaturas = await listarViaturasUse.execute();
     resp.status(200).json(viaturas);
   }
 
-  async atualizar(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async update(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const atualizaViaturaUseCase = container.resolve(AtualizarViaturaUseCase);
       const { id } = req.params;
       const dto = plainToInstance(IUpdateViaturaDTO, req.body);
-      await ValidationService.validate(dto);
+      await ValidateDTO.validate(dto);
 
       const updatedViatura = await atualizaViaturaUseCase.execute(id, dto);
       res.status(200).json(updatedViatura);
@@ -52,7 +47,7 @@ export class ViaturasController {
     }
   }
 
-  async buscarViatura(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async findById(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const buscarViaturaUseCase = container.resolve(BuscarViaturaUseCase);
       const { id } = req.params;
