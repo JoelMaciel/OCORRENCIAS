@@ -1,5 +1,6 @@
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Ocorrencia } from "./Ocorrencia";
+import { StatusViatura } from "../enums/StatusViatura";
 
 @Entity("viaturas")
 export class Viatura {
@@ -18,8 +19,11 @@ export class Viatura {
   @Column({ name: "unidade_policiamento", length: 30 })
   unidadePoliciamento: string;
 
-  @Column({ length: 20 })
-  status: string;
+  @Column({
+    type: "enum",
+    enum: StatusViatura,
+  })
+  status: StatusViatura;
 
   @OneToOne(() => Ocorrencia)
   @JoinColumn()
