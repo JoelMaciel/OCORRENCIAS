@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsOptional, IsEnum } from "class-validator";
+import { IsString, IsNotEmpty, IsEnum } from "class-validator";
 import { StatusViatura } from "../enums/StatusViatura";
 
 export class ICreateViaturaDTO {

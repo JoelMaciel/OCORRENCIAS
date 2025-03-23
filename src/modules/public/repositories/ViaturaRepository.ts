@@ -3,6 +3,7 @@ import { AppDataSource } from "../../../../ormconfig";
 import { Viatura } from "../entities/Viatura";
 import { ICreateViaturaDTO } from "../dtos/ICreateViaturaDTO";
 import { IUpdateViaturaDTO } from "../dtos/IUpdateViaturaDTO";
+import AppError from "../../../errors/AppError";
 
 export class ViaturaRepository implements IViaturaRepository {
   constructor(private readonly viaturaRepository = AppDataSource.getRepository(Viatura)) {}
@@ -13,7 +14,13 @@ export class ViaturaRepository implements IViaturaRepository {
     return viatura;
   }
 
-  public async update(viatura: Viatura, newData: IUpdateViaturaDTO): Promise<Viatura> {
+  public async update(id: string, newData: IUpdateViaturaDTO): Promise<Viatura> {
+    const viatura = await this.viaturaRepository.findOne({ where: { id } });
+
+    if (!viatura) {
+      throw new Error("Viatura não encontrada");
+    }
+
     const updatedViatura = this.viaturaRepository.merge(viatura, newData);
     await this.viaturaRepository.save(updatedViatura);
     return updatedViatura;
