@@ -1,14 +1,15 @@
 import { Request, Response, NextFunction } from "express";
 import { container } from "tsyringe";
-import { CriarViaturaUseCase } from "../usecases/criar-viatura";
-import { DeletarViaturaUseCase } from "../usecases/deletar-viatura";
-import { BuscarViaturaUseCase } from "../usecases/buscar-viatura";
+
 import { plainToInstance } from "class-transformer";
+import { CriarViaturaUseCase } from "../usecases/viatura/criar-viatura";
 import { ICreateViaturaDTO } from "../dtos/ICreateViaturaDTO";
-import { ValidationService } from "../usecases/validation/ValidationService";
-import { ListarViaturasUseCase } from "../usecases/listar-viaturas";
+import { ListarViaturasUseCase } from "../usecases/viatura/listar-viaturas";
+import { AtualizarViaturaUseCase } from "../usecases/viatura/atualizar-viatura";
 import { IUpdateViaturaDTO } from "../dtos/IUpdateViaturaDTO";
-import { AtualizarViaturaUseCase } from "../usecases/atualizar-viatura";
+import { BuscarViaturaUseCase } from "../usecases/viatura/buscar-viatura";
+import { DeletarViaturaUseCase } from "../usecases/viatura/deletar-viatura";
+import { ValidateDTO } from "../usecases/validation/ValidateDto";
 
 export class ViaturasController {
   constructor() {
@@ -23,7 +24,7 @@ export class ViaturasController {
 
       const dto = plainToInstance(ICreateViaturaDTO, req.body);
 
-      await ValidationService.validate(dto);
+      await ValidateDTO.validate(dto);
 
       const newViatura = await criarViaturaUseCase.execute(dto);
       res.status(201).json(newViatura);
@@ -43,7 +44,7 @@ export class ViaturasController {
       const atualizaViaturaUseCase = container.resolve(AtualizarViaturaUseCase);
       const { id } = req.params;
       const dto = plainToInstance(IUpdateViaturaDTO, req.body);
-      await ValidationService.validate(dto);
+      await ValidateDTO.validate(dto);
 
       const updatedViatura = await atualizaViaturaUseCase.execute(id, dto);
       res.status(200).json(updatedViatura);
