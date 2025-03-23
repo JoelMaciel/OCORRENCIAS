@@ -9,6 +9,8 @@ export class EnderecoDTO {
   @IsNotEmpty({ message: 'O campo "numero" é obrigatório.' })
   numero: string;
 
+  complemento: string;
+
   @IsString()
   @IsNotEmpty({ message: 'O campo "bairro" é obrigatório.' })
   bairro: string;

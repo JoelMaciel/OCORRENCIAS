@@ -12,12 +12,6 @@ import { DeletarViaturaUseCase } from "../usecases/viatura/deletar-viatura";
 import { ValidateDTO } from "../dtos/validation/ValidateDTO";
 
 export class ViaturasController {
-  constructor() {
-    this.create = this.create.bind(this);
-    this.delete = this.delete.bind(this);
-    this.buscarViatura = this.buscarViatura.bind(this);
-  }
-
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const criarViaturaUseCase = container.resolve(CriarViaturaUseCase);
@@ -33,13 +27,13 @@ export class ViaturasController {
     }
   }
 
-  async listar(req: Request, resp: Response, next: NextFunction): Promise<void> {
+  async findAll(req: Request, resp: Response, next: NextFunction): Promise<void> {
     const listarViaturasUse = container.resolve(ListarViaturasUseCase);
     const viaturas = await listarViaturasUse.execute();
     resp.status(200).json(viaturas);
   }
 
-  async atualizar(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async update(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const atualizaViaturaUseCase = container.resolve(AtualizarViaturaUseCase);
       const { id } = req.params;
@@ -53,7 +47,7 @@ export class ViaturasController {
     }
   }
 
-  async buscarViatura(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async findById(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const buscarViaturaUseCase = container.resolve(BuscarViaturaUseCase);
       const { id } = req.params;

@@ -7,8 +7,8 @@ const viaturasController = new ViaturasController();
 
 viaturasRoutes.post("/", viaturasController.create);
 viaturasRoutes.delete("/:id", viaturasController.delete);
-viaturasRoutes.get("/:id", viaturasController.buscarViatura);
-viaturasRoutes.get("/", viaturasController.listar);
-viaturasRoutes.put("/:id", viaturasController.atualizar);
+viaturasRoutes.get("/:id", viaturasController.findById);
+viaturasRoutes.get("/", viaturasController.findAll);
+viaturasRoutes.put("/:id", viaturasController.update);
 
 export { viaturasRoutes };
