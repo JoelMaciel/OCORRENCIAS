@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm";
 import { Policial } from "./Policial";
-import { UserRole } from "../enums/UserRole";
 import { MinLength } from "class-validator";
+import { UserRole } from "../enums/UserRole";
 
 @Entity("usuarios")
 export class Usuario {

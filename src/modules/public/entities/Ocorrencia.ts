@@ -14,11 +14,11 @@ import { Viatura } from "./Viatura";
 import { Arma } from "./Arma";
 import { VeiculoApreendido } from "./VeiculoApreendido";
 import { Droga } from "./Droga";
-import { StatusOcorrencia } from "../enums/StatusOcorrencia";
 import { CorpoGuarda } from "./CorpoGuarda";
 import { Acusado } from "./Acusado";
 import { Vitima } from "./Vitima";
 import { ObjetoApreendido } from "./ObjetoApreendido";
+import { StatusOcorrencia } from "../enums/StatusOcorrencia";
 
 @Entity("ocorrencias")
 export class Ocorrencia {
