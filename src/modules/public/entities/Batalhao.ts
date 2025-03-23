@@ -30,10 +30,10 @@ export class Batalhao {
   @OneToMany(() => CorpoGuarda, (guarda) => guarda.batalhao)
   corposGuarda: CorpoGuarda[];
 
-  @ManyToMany(() => Policial, (policial) => policial.batalhoes)
+  @OneToMany(() => Policial, (policial) => policial.batalhao)
   policiais: Policial[];
 
-  @OneToOne(() => Endereco)
+  @OneToOne(() => Endereco, { cascade: true, eager: true })
   @JoinColumn()
   endereco: Endereco;
 }

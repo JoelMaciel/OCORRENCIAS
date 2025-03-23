@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   ManyToMany,
+  ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -33,8 +34,8 @@ export class Policial {
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
 
-  @ManyToMany(() => Batalhao, (batalhao) => batalhao.policiais)
-  batalhoes: Batalhao[];
+  @ManyToOne(() => Batalhao, (batalhao) => batalhao.policiais)
+  batalhao: Batalhao;
 
   @ManyToMany(() => CorpoGuarda, (guarda) => guarda.policiais)
   guardas: CorpoGuarda[];

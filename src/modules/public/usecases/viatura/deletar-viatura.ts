@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import { IViaturaRepository } from "../repositories/interfaces/IViaturaRepository";
-import AppError from "../../../errors/AppError";
+import { IViaturaRepository } from "../../repositories/interfaces/IViaturaRepository";
+import AppError from "../../../../errors/AppError";
 
 @injectable()
 export class DeletarViaturaUseCase {
