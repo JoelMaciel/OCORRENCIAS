@@ -1,14 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
 import { plainToInstance } from "class-transformer";
-import { ICreateBatalhaoDTO } from "../dtos/ICreateBatalhaoDTO";
+import { ICreateBatalhaoDTO } from "../dtos/request/ICreateBatalhaoDTO";
 import { CriarBatalhaoUseCase } from "../usecases/batalhao/criar-batalhao";
 import { ValidateDTO } from "../dtos/validation/ValidateDTO";
 import { BuscarBatalhaoUseCase } from "../usecases/batalhao/buscar-batalhao";
 import { DeletarBatalhaoUseCase } from "../usecases/batalhao/deletar-batalhao";
 import { ListarBatalhaoUseCase } from "../usecases/batalhao/listar-batalhao";
 import { AtualizarBatalhaoUseCase } from "../usecases/batalhao/atualizar-batalhao";
-import { IUpdateBatalhaoDTO } from "../dtos/IUpdateBatalhaoDTO";
+import { IUpdateBatalhaoDTO } from "../dtos/request/IUpdateBatalhaoDTO";
 
 export class BatalhoesController {
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {

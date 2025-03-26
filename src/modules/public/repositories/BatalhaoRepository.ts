@@ -1,7 +1,7 @@
 import { AppDataSource } from "../../../../ormconfig";
 import AppError from "../../../errors/AppError";
-import { ICreateBatalhaoDTO } from "../dtos/ICreateBatalhaoDTO";
-import { IUpdateBatalhaoDTO } from "../dtos/IUpdateBatalhaoDTO";
+import { ICreateBatalhaoDTO } from "../dtos/request/ICreateBatalhaoDTO";
+import { IUpdateBatalhaoDTO } from "../dtos/request/IUpdateBatalhaoDTO";
 import { Batalhao } from "../entities/Batalhao";
 import { IBatalhaoRepository } from "./interfaces/IBatalhaoRepository";
 
@@ -15,9 +15,7 @@ export class BatalhaoRepository implements IBatalhaoRepository {
 
   public async findById(id: string): Promise<Batalhao | null> {
     return await this.batalhaoRepository.findOne({
-      where: {
-        id: id,
-      },
+      where: { id },
     });
   }
 

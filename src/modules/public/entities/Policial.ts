@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToMany,
   ManyToOne,
   OneToMany,
@@ -22,7 +23,7 @@ export class Policial {
   @Column({ length: 100 })
   nome: string;
 
-  @Column({ length: 30 })
+  @Column({ length: 30, unique: true })
   matricula: string;
 
   @Column({ name: "posto_graduacao", length: 30 })
@@ -35,6 +36,7 @@ export class Policial {
   updatedAt: Date;
 
   @ManyToOne(() => Batalhao, (batalhao) => batalhao.policiais)
+  @JoinColumn({ name: "batalhao_id" })
   batalhao: Batalhao;
 
   @ManyToMany(() => CorpoGuarda, (guarda) => guarda.policiais)
@@ -49,6 +51,7 @@ export class Policial {
   @ManyToMany(() => Ocorrencia, (ocorrencia) => ocorrencia.policiaisEnvolvidos)
   ocorrenciasEnvolvidas: Ocorrencia[];
 
-  @OneToOne(() => Usuario, (usuario) => usuario.policial)
+  @OneToOne(() => Usuario, (usuario) => usuario.policial, { nullable: true })
+  @JoinColumn({ name: "usuario_id" })
   usuario: Usuario;
 }

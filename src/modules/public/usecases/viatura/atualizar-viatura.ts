@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { IViaturaRepository } from "../../repositories/interfaces/IViaturaRepository";
-import { IUpdateViaturaDTO } from "../../dtos/IUpdateViaturaDTO";
+import { IUpdateViaturaDTO } from "../../dtos/request/IUpdateViaturaDTO";
 import AppError from "../../../../errors/AppError";
 
 @injectable()

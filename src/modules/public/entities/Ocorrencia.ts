@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   OneToMany,
@@ -63,6 +64,11 @@ export class Ocorrencia {
   registradoPor: Policial;
 
   @ManyToMany(() => Policial, (policial) => policial.ocorrenciasEnvolvidas)
+  @JoinTable({
+    name: "ocorrencias_policiais",
+    joinColumn: { name: "ocorrencia_id", referencedColumnName: "id" },
+    inverseJoinColumn: { name: "policial_id", referencedColumnName: "id" },
+  })
   policiaisEnvolvidos: Policial[];
 
   @OneToOne(() => Viatura)
