@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { IViaturaRepository } from "../../repositories/interfaces/IViaturaRepository";
 import { Viatura } from "../../entities/Viatura";
-import { ICreateViaturaDTO } from "../../dtos/ICreateViaturaDTO";
+import { ICreateViaturaDTO } from "../../dtos/request/ICreateViaturaDTO";
 
 @injectable()
 export class CriarViaturaUseCase {

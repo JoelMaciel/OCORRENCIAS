@@ -1,10 +1,18 @@
-import { IsEnum, IsNotEmpty, IsString } from "class-validator";
-import { StatusViatura } from "../enums/StatusViatura";
+import { IsString, IsNotEmpty, IsEnum } from "class-validator";
+import { StatusViatura } from "../../enums/StatusViatura";
 
-export class IUpdateViaturaDTO {
+export class ICreateViaturaDTO {
   @IsString()
   @IsNotEmpty({ message: 'O campo "prefixo" é obrigatório.' })
   prefixo: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'O campo "placa" é obrigatório.' })
+  placa: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'O campo "modelo" é obrigatório.' })
+  modelo?: string;
 
   @IsString()
   @IsNotEmpty({ message: 'O campo "unidadePoliciamento" é obrigatório.' })

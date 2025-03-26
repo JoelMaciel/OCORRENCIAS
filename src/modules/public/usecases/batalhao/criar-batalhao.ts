@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { IBatalhaoRepository } from "../../repositories/interfaces/IBatalhaoRepository";
-import { ICreateBatalhaoDTO } from "../../dtos/ICreateBatalhaoDTO";
+import { ICreateBatalhaoDTO } from "../../dtos/request/ICreateBatalhaoDTO";
 import { Batalhao } from "../../entities/Batalhao";
 
 @injectable()

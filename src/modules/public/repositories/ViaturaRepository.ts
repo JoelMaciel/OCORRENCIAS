@@ -1,8 +1,8 @@
 import { IViaturaRepository } from "./interfaces/IViaturaRepository";
 import { AppDataSource } from "../../../../ormconfig";
 import { Viatura } from "../entities/Viatura";
-import { ICreateViaturaDTO } from "../dtos/ICreateViaturaDTO";
-import { IUpdateViaturaDTO } from "../dtos/IUpdateViaturaDTO";
+import { ICreateViaturaDTO } from "../dtos/request/ICreateViaturaDTO";
+import { IUpdateViaturaDTO } from "../dtos/request/IUpdateViaturaDTO";
 
 export class ViaturaRepository implements IViaturaRepository {
   constructor(private readonly viaturaRepository = AppDataSource.getRepository(Viatura)) {}

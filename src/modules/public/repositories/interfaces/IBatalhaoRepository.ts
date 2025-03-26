@@ -1,5 +1,5 @@
-import { ICreateBatalhaoDTO } from "../../dtos/ICreateBatalhaoDTO";
-import { IUpdateBatalhaoDTO } from "../../dtos/IUpdateBatalhaoDTO";
+import { ICreateBatalhaoDTO } from "../../dtos/request/ICreateBatalhaoDTO";
+import { IUpdateBatalhaoDTO } from "../../dtos/request/IUpdateBatalhaoDTO";
 import { Batalhao } from "../../entities/Batalhao";
 
 export interface IBatalhaoRepository {
