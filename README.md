@@ -1,57 +1,85 @@
-# Sistema de Gerenciamento de Ocorrências Policiais
+# 🚔 Sistema de Gerenciamento de Ocorrências Policiais
 
-Este projeto é um sistema para gerenciamento de ocorrências policiais, desenvolvido com NodeJS , TypeORM e TypeScript.
 
-## Entidade Ocorrência
+**Sistema backend completo** para registro de ocorrências policiais desenvolvido com:
 
-A entidade principal do sistema é `Ocorrencia`, que representa um registro de ocorrência policial com todos os seus detalhes.
+- **Node.js**: Ambiente de execução JavaScript.
+- **TypeScript**: Tipagem estática.
+- **TypeORM**: ORM para banco de dados relacional.
+-  **PostgreSQL**: Para persistencia de dados.
+-  **DOCKER**: Executar o container do PostgreSQL.
 
-### Estrutura da Ocorrência
 
-- **ID**: Identificador único (UUID)
-- **Marca da Ocorrência (mOcorrencia)**: Código/identificação da ocorrência (30 caracteres)
-- **Datas/Horas**:
-  - `dataHoraInicial`: Quando a ocorrência começou
-  - `dataHoraFinal`: Quando a ocorrência foi encerrada
-- **Tipo de Ocorrência**: Descrição do tipo (100 caracteres)
-- **Artigo**: Artigo legal relacionado (50 caracteres)
-- **Resumo**: Descrição detalhada (texto)
-- **Status**: Enum com valores:
-  - `PENDENTE` (padrão)
-  - `EM_ANDAMENTO`
-  - `RESOLVIDA`
-  - `ARQUIVADA`
+---
 
-### Relacionamentos
+### 🏷️ Estrutura Completa
+| Campo               | Tipo/Descrição                          | Exemplo/Limite       |
+|---------------------|----------------------------------------|---------------------|
+| `id`                | UUID (Identificador único)             | `123e4567-e89b...`  |
+| `mOcorrencia`       | Código identificador                   | 30 caracteres       |
+| `dataHoraInicial`   | Data/hora de início                    | `YYYY-MM-DD HH:MM`  |
+| `dataHoraFinal`     | Data/hora de encerramento              | `YYYY-MM-DD HH:MM`  |
+| `tipoOcorrencia`    | Descrição do tipo                      | 100 caracteres      |
+| `artigo`            | Artigo legal relacionado               | 50 caracteres       |
+| `resumo`            | Descrição detalhada                    | Texto livre         |
+| `status`            | **Status** (ver tabela abaixo)         |                     |
 
-A ocorrência possui diversos relacionamentos com outras entidades:
+### 🔴 Status da Ocorrência
+| Valor          | Emoji | Descrição               |
+|----------------|-------|-------------------------|
+| `PENDENTE`     | 🔴    | Padrão ao criar         |
+| `EM_ANDAMENTO` | 🟡    | Em investigação         |
+| `RESOLVIDA`    | 🟢    | Caso encerrado          |
+| `ARQUIVADA`    | ⚫    | Sem solução identificada |
 
-1. **Corpo de Guarda**: Muitas ocorrências pertencem a um corpo de guarda (`guardaQuartel`)
-2. **Policiais**:
-   - Um policial registra a ocorrência (`registradoPor`)
-   - Muitos policiais podem estar envolvidos (`policiaisEnvolvidos`)
-3. **Recursos**:
-   - Uma viatura associada (`viatura`)
-   - Múltiplas armas envolvidas (`armas`)
-4. **Elementos da Ocorrência**:
-   - Drogas apreendidas (`drogas`)
-   - Objetos apreendidos (`objetosApreendidos`)
-   - Veículos apreendidos (`veiculos`)
-5. **Pessoas envolvidas**:
-   - Acusados (`acusados`)
-   - Vítimas (`vitimas`)
+---
 
-### Informações Adicionais
+### 🔗 Relacionamentos Detalhados
 
-- **Delegacia**: Destino da ocorrência (`delegaciaDestino`)
-- **Delegado**: Responsável pelo caso (`delegadoResponsavel`)
-- **Procedimento**: Número do procedimento (`numeroProcedimento`)
-- **Timestamps**: 
-  - `createdAt`: Quando o registro foi criado
-  - `updatedAt`: Última atualização
+#### 1. 👮 **Corpo de Guarda**
+- `guardaQuartel` → Muitas ocorrências pertencem a um corpo.
 
-## Como Utilizar
+#### 2. 🕵️ **Policiais**
+- `registradoPor` → Policial que registrou a ocorrência  .
+- `policiaisEnvolvidos` → Lista de policiais envolvidos .
 
-1. Instale as dependências:
+#### 3. 🚓 **Recursos**
+- `viatura` → Viatura associada .
+- `armas` → Armas envolvidas.
+
+#### 4. ⚖️ **Elementos da Ocorrência**
+- `drogas` → Drogas apreendidas  
+- `objetosApreendidos` → Objetos confiscados .
+- `veiculos` → Veículos apreendidos . 
+
+#### 5. 👥 **Pessoas**
+- `acusados` → Lista de acusados. 
+- `vitimas` → Lista de vítimas  .
+
+---
+
+### 📌 Informações Complementares
+| Campo                     | Descrição                 |
+|---------------------------|---------------------------|
+| `delegaciaDestino`        | Delegacia responsável     |
+| `delegadoResponsavel`     | Nome do delegado          |
+| `numeroProcedimento`      | Número do processo        |
+| `createdAt`/`updatedAt`   | Timestamps automáticos    |
+
+---
+
+## ⚙️ Como Utilizar
 ```bash
+# Instalar dependências
 npm install
+
+# Executar migrações
+npm run typeorm migration:run
+
+# Iniciar o sistema
+npm run dev
+
+# Rodar o container do PostgreSQL
+Crie um arquico docker-compose.yaml  na raiz do projeto,
+configure para subir um container do postgreSQL,
+execute o comando docker compose up -d
