@@ -1,5 +1,5 @@
-import { ICreateViaturaDTO } from "../../dtos/ICreateViaturaDTO";
-import { IUpdateViaturaDTO } from "../../dtos/IUpdateViaturaDTO";
+import { ICreateViaturaDTO } from "../../dtos/request/ICreateViaturaDTO";
+import { IUpdateViaturaDTO } from "../../dtos/request/IUpdateViaturaDTO";
 import { Viatura } from "../../entities/Viatura";
 
 export interface IViaturaRepository {

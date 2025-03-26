@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { IBatalhaoRepository } from "../../repositories/interfaces/IBatalhaoRepository";
-import { IUpdateBatalhaoDTO } from "../../dtos/IUpdateBatalhaoDTO";
+import { IUpdateBatalhaoDTO } from "../../dtos/request/IUpdateBatalhaoDTO";
 import { Batalhao } from "../../entities/Batalhao";
 import AppError from "../../../../errors/AppError";
 

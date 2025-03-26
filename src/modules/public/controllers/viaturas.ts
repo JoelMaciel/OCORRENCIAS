@@ -3,10 +3,10 @@ import { container } from "tsyringe";
 
 import { plainToInstance } from "class-transformer";
 import { CriarViaturaUseCase } from "../usecases/viatura/criar-viatura";
-import { ICreateViaturaDTO } from "../dtos/ICreateViaturaDTO";
+import { ICreateViaturaDTO } from "../dtos/request/ICreateViaturaDTO";
 import { ListarViaturasUseCase } from "../usecases/viatura/listar-viaturas";
 import { AtualizarViaturaUseCase } from "../usecases/viatura/atualizar-viatura";
-import { IUpdateViaturaDTO } from "../dtos/IUpdateViaturaDTO";
+import { IUpdateViaturaDTO } from "../dtos/request/IUpdateViaturaDTO";
 import { BuscarViaturaUseCase } from "../usecases/viatura/buscar-viatura";
 import { DeletarViaturaUseCase } from "../usecases/viatura/deletar-viatura";
 import { ValidateDTO } from "../dtos/validation/ValidateDTO";
