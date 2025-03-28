@@ -1,6 +1,6 @@
 import { IsDefined, IsNotEmpty, IsString, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
-import { EnderecoDTO } from "./IEnderecoDTO";
+import { IEnderecoDTO } from "./IEnderecoDTO";
 
 export class ICreateBatalhaoDTO {
   @IsString()
@@ -9,6 +9,6 @@ export class ICreateBatalhaoDTO {
 
   @IsDefined({ message: 'O campo "endereco" é obrigatório.' })
   @ValidateNested({ message: 'O campo "endereco" deve ser um objeto válido.' })
-  @Type(() => EnderecoDTO)
-  endereco: EnderecoDTO;
+  @Type(() => IEnderecoDTO)
+  endereco: IEnderecoDTO;
 }
