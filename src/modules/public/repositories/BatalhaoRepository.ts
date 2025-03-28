@@ -8,9 +8,9 @@ import { IBatalhaoRepository } from "./interfaces/IBatalhaoRepository";
 export class BatalhaoRepository implements IBatalhaoRepository {
   constructor(private readonly batalhaoRepository = AppDataSource.getRepository(Batalhao)) {}
 
-  public async create(data: ICreateBatalhaoDTO): Promise<Batalhao> {
-    const batalhao = this.batalhaoRepository.create(data);
-    return await this.batalhaoRepository.save(batalhao);
+  public async create(data: Partial<Batalhao>): Promise<Batalhao> {
+    const newBatalhao = this.batalhaoRepository.create(data);
+    return await this.batalhaoRepository.save(newBatalhao);
   }
 
   public async findById(id: string): Promise<Batalhao | null> {

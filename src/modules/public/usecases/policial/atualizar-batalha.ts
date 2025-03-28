@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { IPolicialRepository } from "../../repositories/interfaces/IPolicialRepository";
 import { PolicialResponseDTO } from "../../dtos/response/PolicialResponseDTO";
-import { AtualizarBatalhaoDTO } from "../../dtos/request/AtualizarBatalhaoDTO";
+import { IAtualizarBatalhaoDTO } from "../../dtos/request/IAtualizarBatalhaoDTO";
 import { IBatalhaoRepository } from "../../repositories/interfaces/IBatalhaoRepository";
 import { DeepPartial } from "typeorm";
 import { Policial } from "../../entities/Policial";
@@ -14,7 +14,7 @@ export class AtualizarPoliciaBatalhaoUseCase {
     @inject("BatalhaoRepository") private readonly batalhaoRepository: IBatalhaoRepository
   ) {}
 
-  public async execute(id: string, dto: AtualizarBatalhaoDTO): Promise<PolicialResponseDTO> {
+  public async execute(id: string, dto: IAtualizarBatalhaoDTO): Promise<PolicialResponseDTO> {
     const policial = await this.policialRepository.findById(id);
 
     if (!policial) {
