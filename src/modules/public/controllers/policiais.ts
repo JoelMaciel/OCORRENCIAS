@@ -7,10 +7,10 @@ import { ListarPolicialUseCase } from "../usecases/policial/listar-policial";
 import { BuscarPolicialUseCase } from "../usecases/policial/buscar-policial";
 import { plainToInstance } from "class-transformer";
 import { DeletarPolicialUseCase } from "../usecases/policial/deletar-policial";
-import { AtualizarBatalhaoDTO } from "../dtos/request/AtualizarBatalhaoDTO";
 import { AtualizarPoliciaBatalhaoUseCase } from "../usecases/policial/atualizar-batalha";
-import { AtualizarPostoGraduacaoDTO } from "../dtos/request/AtualizarPostoGraduacaoDTO";
 import { AtualizarPostoGraduacaolUseCase } from "../usecases/policial/atualizar-posto-graduacao";
+import { IAtualizarBatalhaoDTO } from "../dtos/request/IAtualizarBatalhaoDTO";
+import { IAtualizarPostoGraduacaoDTO } from "../dtos/request/IAtualizarPostoGraduacaoDTO";
 
 export class PoliciasController {
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -49,7 +49,7 @@ export class PoliciasController {
     try {
       const atualizarPoliciaBatalhaoUseCase = container.resolve(AtualizarPoliciaBatalhaoUseCase);
       const { id } = req.params;
-      const dto = plainToInstance(AtualizarBatalhaoDTO, req.body);
+      const dto = plainToInstance(IAtualizarBatalhaoDTO, req.body);
       await ValidateDTO.validate(dto);
 
       const policial = await atualizarPoliciaBatalhaoUseCase.execute(id, dto);
@@ -63,7 +63,7 @@ export class PoliciasController {
     try {
       const atualizarPostoGraduacaolUseCase = container.resolve(AtualizarPostoGraduacaolUseCase);
       const { id } = req.params;
-      const dto = plainToInstance(AtualizarPostoGraduacaoDTO, req.body);
+      const dto = plainToInstance(IAtualizarPostoGraduacaoDTO, req.body);
       await ValidateDTO.validate(dto);
 
       const policial = await atualizarPostoGraduacaolUseCase.execute(id, dto);

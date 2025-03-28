@@ -18,9 +18,12 @@ export class Endereco {
   @Column({ length: 20 })
   numero: string;
 
-  @Column({ length: 150, nullable: true })
-  complemento: string;
-
+  @Column({
+    type: "varchar",
+    length: 150,
+    nullable: true,
+  })
+  complemento: string | null;
   @Column({ length: 80 })
   bairro: string;
 
