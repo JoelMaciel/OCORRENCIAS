@@ -1,6 +1,7 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Ocorrencia } from "./Ocorrencia";
 import { StatusViatura } from "../enums/StatusViatura";
+import { Batalhao } from "./Batalhao";
 
 @Entity("viaturas")
 export class Viatura {
@@ -16,8 +17,9 @@ export class Viatura {
   @Column({ length: 30 })
   modelo: string;
 
-  @Column({ name: "unidade_policiamento", length: 30 })
-  unidadePoliciamento: string;
+  @ManyToOne(() => Batalhao, (batalhao) => batalhao.viaturas)
+  @JoinColumn({ name: "batalhao_id" })
+  batalhao: Batalhao;
 
   @Column({
     type: "enum",
