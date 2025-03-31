@@ -10,11 +10,9 @@ export class DeletarBatalhaoUseCase {
 
   public async execute(id: string): Promise<void> {
     const batalhao = await this.batalhaoRepository.findById(id);
-
     if (!batalhao) {
       throw new AppError("Batalhão não encontrado", 404);
     }
-
     await this.batalhaoRepository.delete(id);
   }
 }

@@ -1,9 +1,10 @@
 import { inject, injectable } from "tsyringe";
 import { IPolicialRepository } from "../../repositories/interfaces/IPolicialRepository";
-import { ICreatePolicialDTO } from "../../dtos/request/ICreatePolicialDTO";
 import { IBatalhaoRepository } from "../../repositories/interfaces/IBatalhaoRepository";
 import AppError from "../../../../errors/AppError";
 import { PolicialResponseDTO } from "../../dtos/response/PolicialResponseDTO";
+import { z } from "zod";
+import { CreatePolicialSchema } from "../../dtos/schemas/CreatePolicialSchema";
 
 @injectable()
 export class CriarPolicialUseCase {
@@ -12,7 +13,10 @@ export class CriarPolicialUseCase {
     @inject("BatalhaoRepository") private readonly batalhaoRepository: IBatalhaoRepository
   ) {}
 
-  public async execute(batalhaoId: string, dto: ICreatePolicialDTO): Promise<PolicialResponseDTO> {
+  public async execute(
+    batalhaoId: string,
+    dto: z.infer<typeof CreatePolicialSchema>
+  ): Promise<PolicialResponseDTO> {
     const batalhao = await this.batalhaoRepository.findById(batalhaoId);
 
     if (!batalhao) {

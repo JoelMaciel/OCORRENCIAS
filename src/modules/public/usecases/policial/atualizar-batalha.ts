@@ -1,11 +1,12 @@
 import { inject, injectable } from "tsyringe";
 import { IPolicialRepository } from "../../repositories/interfaces/IPolicialRepository";
 import { PolicialResponseDTO } from "../../dtos/response/PolicialResponseDTO";
-import { IAtualizarBatalhaoDTO } from "../../dtos/request/IAtualizarBatalhaoDTO";
 import { IBatalhaoRepository } from "../../repositories/interfaces/IBatalhaoRepository";
 import { DeepPartial } from "typeorm";
 import { Policial } from "../../entities/Policial";
 import AppError from "../../../../errors/AppError";
+import { z } from "zod";
+import { AtualizarPolicialBatalhaoSchema } from "../../dtos/schemas/AtualizarPolicialBatalhaoSchema";
 
 @injectable()
 export class AtualizarPoliciaBatalhaoUseCase {
@@ -14,7 +15,10 @@ export class AtualizarPoliciaBatalhaoUseCase {
     @inject("BatalhaoRepository") private readonly batalhaoRepository: IBatalhaoRepository
   ) {}
 
-  public async execute(id: string, dto: IAtualizarBatalhaoDTO): Promise<PolicialResponseDTO> {
+  public async execute(
+    id: string,
+    dto: z.infer<typeof AtualizarPolicialBatalhaoSchema>
+  ): Promise<PolicialResponseDTO> {
     const policial = await this.policialRepository.findById(id);
 
     if (!policial) {

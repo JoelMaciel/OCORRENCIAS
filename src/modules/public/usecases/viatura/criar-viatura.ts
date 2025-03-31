@@ -1,15 +1,35 @@
 import { inject, injectable } from "tsyringe";
 import { IViaturaRepository } from "../../repositories/interfaces/IViaturaRepository";
-import { Viatura } from "../../entities/Viatura";
-import { ICreateViaturaDTO } from "../../dtos/request/ICreateViaturaDTO";
+import { CreateViaturaSchema } from "../../dtos/schemas/CreateViaturaSchema";
+import { z } from "zod";
+import { ViaturaResponseDTO } from "../../dtos/response/ViaturaResponseDTO";
+import { IBatalhaoRepository } from "../../repositories/interfaces/IBatalhaoRepository";
+import AppError from "../../../../errors/AppError";
+import { StatusViatura } from "../../enums/StatusViatura";
 
 @injectable()
 export class CriarViaturaUseCase {
   constructor(
-    @inject("ViaturaRepository") private readonly viaturaRepository: IViaturaRepository
+    @inject("ViaturaRepository") private readonly viaturaRepository: IViaturaRepository,
+    @inject("BatalhaoRepository") private readonly batalhaoRepository: IBatalhaoRepository
   ) {}
 
-  public async execute(viatura: ICreateViaturaDTO): Promise<Viatura> {
-    return await this.viaturaRepository.create(viatura);
+  public async execute(dto: z.infer<typeof CreateViaturaSchema>): Promise<ViaturaResponseDTO> {
+    const batalhao = await this.batalhaoRepository.findById(dto.batalhaoId);
+
+    if (!batalhao) {
+      throw new AppError("Batalhão não encontrado", 404);
+    }
+
+    const dataViatura = {
+      prefixo: dto.prefixo,
+      placa: dto.placa,
+      modelo: dto.modelo,
+      status: StatusViatura.ATIVA,
+      batalhao: batalhao,
+    };
+
+    const savedViatura = await this.viaturaRepository.create(dataViatura);
+    return new ViaturaResponseDTO(savedViatura);
   }
 }

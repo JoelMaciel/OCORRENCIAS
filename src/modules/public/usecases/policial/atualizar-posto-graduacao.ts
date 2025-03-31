@@ -2,7 +2,9 @@ import { inject, injectable } from "tsyringe";
 import { IPolicialRepository } from "../../repositories/interfaces/IPolicialRepository";
 import { PolicialResponseDTO } from "../../dtos/response/PolicialResponseDTO";
 import AppError from "../../../../errors/AppError";
-import { IAtualizarPostoGraduacaoDTO } from "../../dtos/request/IAtualizarPostoGraduacaoDTO";
+
+import { z } from "zod";
+import { AtualizarPostoGraduacaoSchema } from "../../dtos/schemas/AtualizarPostoGraduacaoSchema";
 
 @injectable()
 export class AtualizarPostoGraduacaolUseCase {
@@ -10,7 +12,10 @@ export class AtualizarPostoGraduacaolUseCase {
     @inject("PolicialRepository") private readonly policialRepository: IPolicialRepository
   ) {}
 
-  public async execute(id: string, dto: IAtualizarPostoGraduacaoDTO): Promise<PolicialResponseDTO> {
+  public async execute(
+    id: string,
+    dto: z.infer<typeof AtualizarPostoGraduacaoSchema>
+  ): Promise<PolicialResponseDTO> {
     const exists = await this.policialRepository.findById(id);
     if (!exists) {
       throw new AppError("Policial não encontrado", 404);

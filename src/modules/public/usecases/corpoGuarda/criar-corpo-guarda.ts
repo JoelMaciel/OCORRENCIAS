@@ -1,11 +1,12 @@
 import { inject, injectable } from "tsyringe";
 import { ICorpoGuardaRepository } from "../../repositories/interfaces/ICorpoGuardaRepository";
-import { ICreateCorpoGuardaDTO } from "../../dtos/request/ICreateCorpoGuardaDTO";
 import { CorpoGuardaResponseDTO } from "../../dtos/response/CorpoGuardaResponseDTO ";
 import AppError from "../../../../errors/AppError";
 import { AppDataSource } from "../../../../../ormconfig";
 import { Batalhao } from "../../entities/Batalhao";
 import { Policial } from "../../entities/Policial";
+import { z } from "zod";
+import { CreateCorpoGuardaSchema } from "../../dtos/schemas/CreateCorpoGuardaSchema";
 
 @injectable()
 export class CriarCorpoGuardaUseCase {
@@ -16,7 +17,9 @@ export class CriarCorpoGuardaUseCase {
   private batalhaoRepository = AppDataSource.getRepository(Batalhao);
   private policialRepository = AppDataSource.getRepository(Policial);
 
-  public async execute(dto: ICreateCorpoGuardaDTO): Promise<CorpoGuardaResponseDTO> {
+  public async execute(
+    dto: z.infer<typeof CreateCorpoGuardaSchema>
+  ): Promise<CorpoGuardaResponseDTO> {
     const batalhao = await this.batalhaoRepository.findOne({
       where: { id: dto.batalhaoId },
     });

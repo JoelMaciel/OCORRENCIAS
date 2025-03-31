@@ -1,11 +1,9 @@
-import { ICreateViaturaDTO } from "../../dtos/request/ICreateViaturaDTO";
-import { IUpdateViaturaDTO } from "../../dtos/request/IUpdateViaturaDTO";
 import { Viatura } from "../../entities/Viatura";
 
 export interface IViaturaRepository {
-  create(data: ICreateViaturaDTO): Promise<Viatura>;
-  update(id: string, newData: IUpdateViaturaDTO): Promise<Viatura>;
+  create(data: Partial<Viatura>): Promise<Viatura>;
+  update(id: string, data: Partial<Viatura>): Promise<Viatura>;
   findById(id: string): Promise<Viatura | null>;
-  findAll(): Promise<Viatura[]>;
+  findAll(page: number, limit: number, prefixo?: string): Promise<[Viatura[], number]>;
   delete(id: string): Promise<void>;
 }
