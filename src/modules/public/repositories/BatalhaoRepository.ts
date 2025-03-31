@@ -1,7 +1,4 @@
 import { AppDataSource } from "../../../../ormconfig";
-import AppError from "../../../errors/AppError";
-import { ICreateBatalhaoDTO } from "../dtos/request/ICreateBatalhaoDTO";
-import { IUpdateBatalhaoDTO } from "../dtos/request/IUpdateBatalhaoDTO";
 import { Batalhao } from "../entities/Batalhao";
 import { IBatalhaoRepository } from "./interfaces/IBatalhaoRepository";
 
@@ -19,24 +16,33 @@ export class BatalhaoRepository implements IBatalhaoRepository {
     });
   }
 
-  public async update(id: string, newData: IUpdateBatalhaoDTO): Promise<Batalhao> {
-    const batalhao = await this.batalhaoRepository.findOne({
+  public async update(id: string, data: Partial<Batalhao>): Promise<Batalhao> {
+    const batalhao = await this.batalhaoRepository.findOneOrFail({
       where: { id },
     });
 
-    if (!batalhao) {
-      throw new AppError("Batalhao não encontrada");
-    }
-
-    const batalhaoUpdated = this.batalhaoRepository.merge(batalhao, newData);
+    const batalhaoUpdated = this.batalhaoRepository.merge(batalhao, data);
 
     await this.batalhaoRepository.save(batalhaoUpdated);
 
     return batalhaoUpdated;
   }
 
-  public async findAll(): Promise<Batalhao[]> {
-    return await this.batalhaoRepository.find();
+  public async findAll(page: number, limit: number, nome?: string): Promise<[Batalhao[], number]> {
+    const queryBuilder = this.batalhaoRepository
+      .createQueryBuilder("batalhao")
+      .leftJoinAndSelect("batalhao.endereco", "endereco");
+
+    if (nome) {
+      queryBuilder.where("LOWER(batalhao.nome) LIKE LOWER(:nome)", { nome: `%${nome}` });
+    }
+
+    const [result, total] = await queryBuilder
+      .skip((page - 1) * limit)
+      .take(limit)
+      .getManyAndCount();
+
+    return [result, total];
   }
 
   public async delete(id: string): Promise<void> {

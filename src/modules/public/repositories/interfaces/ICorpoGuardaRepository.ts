@@ -11,5 +11,5 @@ export interface ICorpoGuardaRepository {
     dataInicial?: Date,
     dataFinal?: Date
   ): Promise<[CorpoGuarda[], number]>;
-  update(id: string, policiais: Policial[]): Promise<CorpoGuarda>;
+  update(id: string, data: Partial<CorpoGuarda>): Promise<CorpoGuarda>;
 }

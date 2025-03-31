@@ -1,13 +1,12 @@
 import { DeepPartial } from "typeorm";
-import { ICreatePolicialDTO } from "../../dtos/request/ICreatePolicialDTO";
 import { Policial } from "../../entities/Policial";
 
 export interface IPolicialRepository {
-  create(batalhaoId: string, dto: ICreatePolicialDTO): Promise<Policial>;
+  create(batalhaoId: string, data: Partial<Policial>): Promise<Policial>;
   existsByMatricula(matricula: string): Promise<boolean>;
-  findAll(): Promise<Policial[]>;
+  findAll(page: number, limit: number, matricula?: string): Promise<[Policial[], number]>;
   findById(policialId: string): Promise<Policial | null>;
-  updateBatalhao(id: string, dto: DeepPartial<Policial>): Promise<Policial>;
-  updatePostoGraduacao(id: string, dto: DeepPartial<Policial>): Promise<Policial>;
+  updateBatalhao(id: string, data: DeepPartial<Policial>): Promise<Policial>;
+  updatePostoGraduacao(id: string, data: DeepPartial<Policial>): Promise<Policial>;
   delete(id: string): Promise<void>;
 }

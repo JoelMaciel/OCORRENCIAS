@@ -14,19 +14,15 @@ export class ViaturaRepository implements IViaturaRepository {
   }
 
   public async update(id: string, newData: IUpdateViaturaDTO): Promise<Viatura> {
-    const viatura = await this.viaturaRepository.findOne({ where: { id } });
-
-    if (!viatura) {
-      throw new Error("Viatura não encontrada");
-    }
+    const viatura = await this.viaturaRepository.findOneOrFail({ where: { id } });
 
     const updatedViatura = this.viaturaRepository.merge(viatura, newData);
     await this.viaturaRepository.save(updatedViatura);
     return updatedViatura;
   }
 
-  public async findById(id: string): Promise<Viatura | null> {
-    return await this.viaturaRepository.findOne({
+  public async findById(id: string): Promise<Viatura> {
+    return await this.viaturaRepository.findOneOrFail({
       where: {
         id: id,
       },

@@ -1,20 +1,18 @@
 import { NextFunction, Request, Response } from "express";
 import { container } from "tsyringe";
 import { CriarCorpoGuardaUseCase } from "../usecases/corpoGuarda/criar-corpo-guarda";
-import { plainToInstance } from "class-transformer";
-import { ICreateCorpoGuardaDTO } from "../dtos/request/ICreateCorpoGuardaDTO";
-import { ValidateDTO } from "../dtos/validation/ValidateDTO";
 import { AtualizarCorpoGuardaUseCase } from "../usecases/corpoGuarda/atualizar-corpo-guarda";
-import { IUpdateCorpoGuardaDTO } from "../dtos/request/IUpdateCorpoGuardaDTO";
 import { BuscarCorpoGuardaUseCase } from "../usecases/corpoGuarda/buscar-corpo-guarda";
 import { ListarCorpoGuardaUseCase } from "../usecases/corpoGuarda/listar-corpo-guarda";
+import { ValidationSchema } from "../dtos/validation/ValidateSchema";
+import { CreateCorpoGuardaSchema } from "../dtos/schemas/CreateCorpoGuardaSchema";
+import { AtualizarCorpoGuardaSchema } from "../dtos/schemas/AtualizarCorpoGuardaSchema";
 
 export class CorpoGuardaController {
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const criarCorpoGuardaUseCase = container.resolve(CriarCorpoGuardaUseCase);
-    const dto = plainToInstance(ICreateCorpoGuardaDTO, req.body);
     try {
-      await ValidateDTO.validate(dto);
+      const criarCorpoGuardaUseCase = container.resolve(CriarCorpoGuardaUseCase);
+      const dto = await ValidationSchema.validate(CreateCorpoGuardaSchema, req.body);
       const corpoGuarda = await criarCorpoGuardaUseCase.execute(dto);
       res.status(201).json(corpoGuarda);
     } catch (error) {
@@ -35,21 +33,9 @@ export class CorpoGuardaController {
 
       const listarCorpaGuardaUseCase = container.resolve(ListarCorpoGuardaUseCase);
 
-      const { data, total } = await listarCorpaGuardaUseCase.execute(
-        page,
-        limit,
-        dataInicial,
-        dataFinal
-      );
+      const result = await listarCorpaGuardaUseCase.execute(page, limit, dataInicial, dataFinal);
 
-      const totalPages = Math.ceil(total / limit);
-
-      res.status(200).json({
-        data,
-        total,
-        page,
-        totalPages,
-      });
+      res.status(200).json(result);
     } catch (error) {
       next(error);
     }
@@ -67,12 +53,15 @@ export class CorpoGuardaController {
   }
 
   async update(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const atualizaCorpoGuardaUseCase = container.resolve(AtualizarCorpoGuardaUseCase);
-    const { id } = req.params;
-    const dto = plainToInstance(IUpdateCorpoGuardaDTO, req.body);
     try {
-      await ValidateDTO.validate(dto);
-      const corpoGuarda = await atualizaCorpoGuardaUseCase.execute(id, dto.policiais);
+      const atualizaCorpoGuardaUseCase = container.resolve(AtualizarCorpoGuardaUseCase);
+
+      const { id } = req.params;
+
+      const dto = await ValidationSchema.validate(AtualizarCorpoGuardaSchema, req.body);
+
+      const corpoGuarda = await atualizaCorpoGuardaUseCase.execute(id, dto);
+
       res.status(200).json(corpoGuarda);
     } catch (error) {
       next(error);
