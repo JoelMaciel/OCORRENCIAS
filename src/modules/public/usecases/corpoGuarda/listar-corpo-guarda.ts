@@ -13,16 +13,17 @@ export class ListarCorpoGuardaUseCase {
     limit: number = 10,
     dataInicial?: Date,
     dataFinal?: Date
-  ): Promise<{ data: CorpoGuardaResponseDTO[]; total: number }> {
+  ): Promise<{ data: CorpoGuardaResponseDTO[]; total: number; page: number; totalPages: number }> {
     const [corposGuarda, total] = await this.corpoGuardaRepository.findAll(
       page,
       limit,
       dataInicial,
       dataFinal
     );
+    const totalPages = Math.ceil(total / limit);
 
     const data = corposGuarda.map((corpoGuarda) => new CorpoGuardaResponseDTO(corpoGuarda));
 
-    return { data, total };
+    return { data, total, page, totalPages };
   }
 }

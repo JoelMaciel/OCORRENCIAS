@@ -8,8 +8,22 @@ export class ListarPolicialUseCase {
     @inject("PolicialRepository") private readonly policialRepository: IPolicialRepository
   ) {}
 
-  public async execute(): Promise<PolicialResponseDTO[]> {
-    const policiais = await this.policialRepository.findAll();
-    return policiais.map((policial) => new PolicialResponseDTO(policial));
+  public async execute(
+    page: number,
+    limit: number,
+    matricula?: string
+  ): Promise<{
+    policiais: PolicialResponseDTO[];
+    total: number;
+    page: number;
+    totalPages: number;
+  }> {
+    const [policiais, total] = await this.policialRepository.findAll(page, limit, matricula);
+
+    const totalPages = Math.ceil(total / limit);
+
+    const policiaisDTO = policiais.map((policial) => new PolicialResponseDTO(policial));
+
+    return { policiais: policiaisDTO, total, page, totalPages };
   }
 }

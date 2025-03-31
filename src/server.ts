@@ -4,6 +4,7 @@ import express from "express";
 import { AppDataSource } from "../ormconfig";
 import { routes } from "./routes";
 import errorHandler from "./middleware/errorHandler";
+import "express-async-errors";
 
 const app = express();
 

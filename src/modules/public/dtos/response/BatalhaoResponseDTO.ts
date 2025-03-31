@@ -13,21 +13,26 @@ export class BatalhaoResponseDTO {
     cidade: string;
     uf: string;
     cep: string;
-  };
+  } | null;
 
   constructor(batalhao: Batalhao) {
     this.id = batalhao.id;
     this.nome = batalhao.nome;
     this.dataCriacao = batalhao.dataCriacao;
     this.dataAtualizacao = batalhao.dataAtualizacao;
-    this.endereco = {
-      rua: batalhao.endereco.rua,
-      numero: batalhao.endereco.numero,
-      complemento: batalhao.endereco.complemento,
-      bairro: batalhao.endereco.bairro,
-      cidade: batalhao.endereco.cidade,
-      uf: batalhao.endereco.uf,
-      cep: batalhao.endereco.cep,
-    };
+
+    if (batalhao.endereco) {
+      this.endereco = {
+        rua: batalhao.endereco.rua,
+        numero: batalhao.endereco.numero,
+        complemento: batalhao.endereco.complemento,
+        bairro: batalhao.endereco.bairro,
+        cidade: batalhao.endereco.cidade,
+        uf: batalhao.endereco.uf,
+        cep: batalhao.endereco.cep,
+      };
+    } else {
+      this.endereco = null;
+    }
   }
 }

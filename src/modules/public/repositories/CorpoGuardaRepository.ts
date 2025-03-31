@@ -1,5 +1,4 @@
 import { AppDataSource } from "../../../../ormconfig";
-import AppError from "../../../errors/AppError";
 import { Batalhao } from "../entities/Batalhao";
 import { CorpoGuarda } from "../entities/CorpoGuarda";
 import { Policial } from "../entities/Policial";
@@ -65,13 +64,12 @@ export class CorpoGuardaRepository implements ICorpoGuardaRepository {
     return await query.getManyAndCount();
   }
 
-  public async update(id: string, policiais: Policial[]): Promise<CorpoGuarda> {
-    const corpoGuarda = await this.findById(id);
+  public async update(id: string, data: Partial<CorpoGuarda>): Promise<CorpoGuarda> {
+    const corpoGuarda = await this.corpoGuardaRepository.findOneOrFail({
+      where: { id },
+    });
 
-    if (!corpoGuarda) {
-      throw new AppError("Corpo da Guarda não encontrado", 404);
-    }
-    corpoGuarda.policiais = policiais;
+    const updatedCorpoGuarda = this.corpoGuardaRepository.merge(corpoGuarda, data);
     return await this.corpoGuardaRepository.save(corpoGuarda);
   }
 }

@@ -3,7 +3,6 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  ManyToMany,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -12,6 +11,7 @@ import {
 import { Policial } from "./Policial";
 import { CorpoGuarda } from "./CorpoGuarda";
 import { Endereco } from "./Endereco";
+import { Viatura } from "./Viatura";
 
 @Entity("batalhoes")
 export class Batalhao {
@@ -32,6 +32,9 @@ export class Batalhao {
 
   @OneToMany(() => Policial, (policial) => policial.batalhao)
   policiais: Policial[];
+
+  @OneToMany(() => Viatura, (viatura) => viatura.batalhao)
+  viaturas: Viatura[];
 
   @OneToOne(() => Endereco, { cascade: true, eager: true })
   @JoinColumn()

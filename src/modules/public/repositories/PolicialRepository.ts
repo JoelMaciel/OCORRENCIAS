@@ -1,7 +1,5 @@
 import { DeepPartial } from "typeorm";
 import { AppDataSource } from "../../../../ormconfig";
-import AppError from "../../../errors/AppError";
-import { ICreatePolicialDTO } from "../dtos/request/ICreatePolicialDTO";
 import { Policial } from "../entities/Policial";
 
 import { IPolicialRepository } from "./interfaces/IPolicialRepository";
@@ -9,12 +7,9 @@ import { IPolicialRepository } from "./interfaces/IPolicialRepository";
 export class PolicialRepository implements IPolicialRepository {
   constructor(private readonly policialRepository = AppDataSource.getRepository(Policial)) {}
 
-  public async create(
-    batalhaoId: string,
-    iCreatePolicialDTO: ICreatePolicialDTO
-  ): Promise<Policial> {
+  public async create(batalhaoId: string, data: Partial<Policial>): Promise<Policial> {
     const policial = this.policialRepository.create({
-      ...iCreatePolicialDTO,
+      ...data,
       batalhao: { id: batalhaoId },
     });
 
@@ -42,26 +37,20 @@ export class PolicialRepository implements IPolicialRepository {
       .getOne();
   }
 
-  public async updateBatalhao(id: string, dto: DeepPartial<Policial>): Promise<Policial> {
-    const policial = await this.policialRepository.findOne({ where: { id } });
+  public async updateBatalhao(id: string, data: DeepPartial<Policial>): Promise<Policial> {
+    const policial = await this.policialRepository.findOneOrFail({ where: { id } });
 
-    if (!policial) {
-      throw new AppError("Policial não encontrado", 404);
-    }
-
-    const updatedPolicia = this.policialRepository.merge(policial, dto);
+    const updatedPolicia = this.policialRepository.merge(policial, data);
     await this.policialRepository.save(updatedPolicia);
     return updatedPolicia;
   }
 
-  public async updatePostoGraduacao(id: string, dto: DeepPartial<Policial>): Promise<Policial> {
-    const policial = await this.policialRepository.findOne({ where: { id } });
+  public async updatePostoGraduacao(id: string, data: DeepPartial<Policial>): Promise<Policial> {
+    const policial = await this.policialRepository.findOneOrFail({
+      where: { id },
+    });
 
-    if (!policial) {
-      throw new AppError("Policial não encontrado", 404);
-    }
-
-    const updatedPolicial = this.policialRepository.merge(policial, dto);
+    const updatedPolicial = this.policialRepository.merge(policial, data);
     await this.policialRepository.save(updatedPolicial);
 
     return this.policialRepository.findOneOrFail({
@@ -71,10 +60,37 @@ export class PolicialRepository implements IPolicialRepository {
     });
   }
 
-  public async findAll(): Promise<Policial[]> {
-    return await this.policialRepository.find({
-      relations: ["batalhao"],
-    });
+  public async findAll(
+    page: number,
+    limit: number,
+    matricula?: string
+  ): Promise<[Policial[], number]> {
+    const queryBuilder = this.policialRepository
+      .createQueryBuilder("policial")
+      .leftJoin("policial.batalhao", "batalhao")
+      .select([
+        "policial.id",
+        "policial.nome",
+        "policial.matricula",
+        "policial.postoGraduacao",
+        "policial.createdAt",
+        "policial.updatedAt",
+        "batalhao.id",
+        "batalhao.nome",
+      ]);
+
+    if (matricula) {
+      queryBuilder.where("LOWER(policial.matricula) LIKE LOWER(:matricula)", {
+        matricula: `${matricula}`,
+      });
+    }
+
+    const [resul, total] = await queryBuilder
+      .skip((page - 1) * limit)
+      .take(limit)
+      .getManyAndCount();
+
+    return [resul, total];
   }
 
   public async delete(id: string): Promise<void> {

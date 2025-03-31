@@ -1,6 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm";
 import { Policial } from "./Policial";
-import { MinLength } from "class-validator";
 import { UserRole } from "../enums/UserRole";
 
 @Entity("usuarios")
@@ -12,7 +11,6 @@ export class Usuario {
   email: string;
 
   @Column({ length: 30 })
-  @MinLength(8, { message: "A senha deve ter no mínimo 8 caracteres" })
   senha: string;
 
   @Column()
