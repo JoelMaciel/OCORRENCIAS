@@ -30,6 +30,6 @@ export class Arma {
   updatedAt: Date;
 
   @OneToOne(() => Ocorrencia)
-  @JoinColumn()
+  @JoinColumn({ name: "endereco_id" })
   ocorrencia: Ocorrencia;
 }

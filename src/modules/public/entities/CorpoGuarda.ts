@@ -1,6 +1,7 @@
 import {
   CreateDateColumn,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -24,9 +25,11 @@ export class CorpoGuarda {
   dataAtualizacao: Date;
 
   @ManyToOne(() => Batalhao, (batalhao) => batalhao.corposGuarda)
+  @JoinColumn({ name: "batalhao_id" })
   batalhao: Batalhao;
 
   @ManyToOne(() => Policial, (policial) => policial.comandanteDeGuarda)
+  @JoinColumn({ name: "comandante_id" })
   comandante: Policial;
 
   @ManyToMany(() => Policial, (policial) => policial.guardas)

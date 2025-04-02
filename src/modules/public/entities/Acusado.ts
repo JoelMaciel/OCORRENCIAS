@@ -46,6 +46,6 @@ export class Acusado {
   ocorrencia: Ocorrencia;
 
   @OneToOne(() => Endereco, { cascade: true, eager: true })
-  @JoinColumn()
+  @JoinColumn({ name: "endereco_id" })
   endereco: Endereco;
 }
