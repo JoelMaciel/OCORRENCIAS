@@ -1,4 +1,4 @@
-import { DeepPartial } from "typeorm";
+import { DeepPartial, In, Not } from "typeorm";
 import { AppDataSource } from "../../../../ormconfig";
 import { Policial } from "../entities/Policial";
 
@@ -29,8 +29,10 @@ export class PolicialRepository implements IPolicialRepository {
         "policial.id",
         "policial.nome",
         "policial.matricula",
+        "policial.cpf",
+        "policial.contato",
+        "policial.email",
         "policial.postoGraduacao",
-        "batalhao.id",
         "batalhao.nome",
       ])
       .where("policial.id = :id", { id })
@@ -72,10 +74,12 @@ export class PolicialRepository implements IPolicialRepository {
         "policial.id",
         "policial.nome",
         "policial.matricula",
+        "policial.cpf",
+        "policial.contato",
+        "policial.email",
         "policial.postoGraduacao",
         "policial.createdAt",
         "policial.updatedAt",
-        "batalhao.id",
         "batalhao.nome",
       ]);
 
@@ -97,8 +101,25 @@ export class PolicialRepository implements IPolicialRepository {
     await this.policialRepository.delete(id);
   }
 
+  public async findByIds(ids: string[]): Promise<Policial[]> {
+    return this.policialRepository.find({
+      where: { id: In(ids) },
+      relations: ["batalhao"],
+    });
+  }
+
   public async existsByMatricula(matricula: string): Promise<boolean> {
     const count = await this.policialRepository.count({ where: { matricula } });
+    return count > 0;
+  }
+
+  public async existsByCpf(cpf: string): Promise<boolean> {
+    const count = await this.policialRepository.count({ where: { cpf } });
+    return count > 0;
+  }
+
+  public async existsByEmail(email: string): Promise<boolean> {
+    const count = await this.policialRepository.count({ where: { email } });
     return count > 0;
   }
 }

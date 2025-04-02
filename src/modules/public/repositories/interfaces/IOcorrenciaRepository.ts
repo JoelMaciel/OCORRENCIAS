@@ -1,7 +1,8 @@
 import { Ocorrencia } from "../../entities/Ocorrencia";
 
 export interface IOcorrenciaRepository {
-  buscarOcorrenciaPorId(id: string): Promise<Ocorrencia | null>;
-
-  criarOcorrencia(ocorrencia: Ocorrencia): Promise<Ocorrencia>;
+  create(data: Partial<Ocorrencia>): Promise<Ocorrencia>;
+  // findById(id: string): Promise<Ocorrencia | null>;
+  // findAll(page: number, limit: number): Promise<[Ocorrencia[], number]>;
+  // delete(id: string): Promise<void>;
 }

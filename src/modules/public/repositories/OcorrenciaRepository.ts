@@ -1,17 +1,17 @@
 import { Ocorrencia } from "../entities/Ocorrencia";
 import { AppDataSource } from "../../../../ormconfig";
-import { singleton } from "tsyringe";
 import { IOcorrenciaRepository } from "./interfaces/IOcorrenciaRepository";
 
-@singleton()
 export class OcorrenciaRepository implements IOcorrenciaRepository {
   constructor(private readonly ocorrenciaRepository = AppDataSource.getRepository(Ocorrencia)) {}
 
-  async buscarOcorrenciaPorId(id: string): Promise<Ocorrencia | null> {
-    return this.ocorrenciaRepository.findOne({ where: { id } });
-  }
+  public async create(data: Partial<Ocorrencia>): Promise<Ocorrencia> {
+    const ocorrencia = this.ocorrenciaRepository.create(data);
+    console.log(ocorrencia);
 
-  async criarOcorrencia(ocorrencia: Ocorrencia): Promise<Ocorrencia> {
-    return this.ocorrenciaRepository.save(ocorrencia);
+    const savedOcorrencia = await this.ocorrenciaRepository.save(ocorrencia);
+    console.log(" +++++++++++++++++++++++*********************Ocorrência salva:", savedOcorrencia);
+
+    return savedOcorrencia;
   }
 }

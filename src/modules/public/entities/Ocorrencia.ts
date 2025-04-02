@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -35,7 +36,7 @@ export class Ocorrencia {
   @Column({ name: "data_hora_final" })
   dataHoraFinal: Date;
 
-  @Column({ length: 100 })
+  @Column({ name: "tipo_ocorrencia", length: 100 })
   tipoOcorrencia: string;
 
   @Column({ length: 50 })
@@ -58,16 +59,18 @@ export class Ocorrencia {
   updatedAt: Date;
 
   @ManyToOne(() => CorpoGuarda, (guarda) => guarda.ocorrencias)
+  @JoinColumn({ name: "guarda_quartel_id" })
   guardaQuartel: CorpoGuarda;
 
   @ManyToOne(() => Policial, (policial) => policial.ocorrenciasRegistradas)
+  @JoinColumn({ name: "registrado_por_id" })
   registradoPor: Policial;
 
   @ManyToMany(() => Policial, (policial) => policial.ocorrenciasEnvolvidas)
   @JoinTable({
     name: "ocorrencias_policiais",
-    joinColumn: { name: "ocorrencia_id", referencedColumnName: "id" },
-    inverseJoinColumn: { name: "policial_id", referencedColumnName: "id" },
+    joinColumn: { name: "ocorrencia_id" },
+    inverseJoinColumn: { name: "policial_id" },
   })
   policiaisEnvolvidos: Policial[];
 

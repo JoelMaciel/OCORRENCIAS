@@ -5,7 +5,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { Acusado } from "./Acusado";
 
 @Entity("enderecos")
 export class Endereco {

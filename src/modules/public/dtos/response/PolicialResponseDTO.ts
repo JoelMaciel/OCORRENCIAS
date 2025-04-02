@@ -5,7 +5,9 @@ export class PolicialResponseDTO {
   nome: string;
   matricula: string;
   postoGraduacao: string;
-  batalhaoId: string | null;
+  cpf: string;
+  contato: string;
+  email: string;
   batalhao: string | null;
   createdAt: Date;
   updatedAt: Date;
@@ -15,8 +17,10 @@ export class PolicialResponseDTO {
     this.nome = policial.nome;
     this.matricula = policial.matricula;
     this.postoGraduacao = policial.postoGraduacao;
-    this.batalhaoId = policial.batalhao?.id || null;
-    this.batalhao = policial.batalhao?.nome || null;
+    this.cpf = policial.cpf;
+    this.contato = policial.contato;
+    this.email = policial.email;
+    this.batalhao = policial.batalhao?.nome;
     this.createdAt = policial.createdAt;
     this.updatedAt = policial.updatedAt;
   }
