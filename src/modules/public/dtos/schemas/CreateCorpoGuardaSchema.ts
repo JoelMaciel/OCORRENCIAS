@@ -15,3 +15,5 @@ export const CreateCorpoGuardaSchema = z.object({
     })
     .nonempty({ message: "O campo policias nao deve estar vazio" }),
 });
+
+export type CreateCorpoGuardaInput = z.infer<typeof CreateCorpoGuardaSchema>;

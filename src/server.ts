@@ -15,7 +15,7 @@ AppDataSource.initialize()
     console.log("📦 Conectado ao banco de dados!");
 
     app.use(routes);
-    //app.use(errorHandler);
+    app.use(errorHandler);
 
     app.listen(3000, () => {
       console.log("🚀 Servidor rodando na porta 3000");
