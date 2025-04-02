@@ -17,8 +17,12 @@ export class PoliciasController {
       const criaPolicialUseCase = container.resolve(CriarPolicialUseCase);
       const { id: batalhaoId } = req.params;
       const dto = await ValidationSchema.validate(CreatePolicialSchema, req.body);
+      const policialData = {
+        ...dto,
+        dataAdmissao: new Date(dto.dataAdmissao),
+      };
 
-      const policial = await criaPolicialUseCase.execute(batalhaoId, dto);
+      const policial = await criaPolicialUseCase.execute(batalhaoId, policialData);
 
       res.status(201).json(policial);
     } catch (error) {

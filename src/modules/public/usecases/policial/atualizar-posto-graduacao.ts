@@ -2,9 +2,7 @@ import { inject, injectable } from "tsyringe";
 import { IPolicialRepository } from "../../repositories/interfaces/IPolicialRepository";
 import { PolicialResponseDTO } from "../../dtos/response/PolicialResponseDTO";
 import AppError from "../../../../errors/AppError";
-
-import { z } from "zod";
-import { AtualizarPostoGraduacaoSchema } from "../../dtos/schemas/AtualizarPostoGraduacaoSchema";
+import { AtualizarPostoGraduacaoInput } from "../../dtos/schemas/AtualizarPostoGraduacaoSchema";
 
 @injectable()
 export class AtualizarPostoGraduacaolUseCase {
@@ -14,7 +12,7 @@ export class AtualizarPostoGraduacaolUseCase {
 
   public async execute(
     id: string,
-    dto: z.infer<typeof AtualizarPostoGraduacaoSchema>
+    dto: AtualizarPostoGraduacaoInput
   ): Promise<PolicialResponseDTO> {
     const exists = await this.policialRepository.findById(id);
     if (!exists) {
@@ -23,6 +21,7 @@ export class AtualizarPostoGraduacaolUseCase {
 
     const updatedPolicial = await this.policialRepository.updatePostoGraduacao(id, {
       postoGraduacao: dto.postoGraduacao,
+      contato: dto.contato,
     });
 
     return new PolicialResponseDTO(updatedPolicial);
