@@ -8,3 +8,5 @@ export const CreateViaturaSchema = z.object({
     .string({ message: "O campo 'batalhaoId' é obrigatório." })
     .uuid({ message: "O campo batalhaoId deve ser um UUID válido" }),
 });
+
+export type CreateViaturaInput = z.infer<typeof CreateViaturaSchema>;

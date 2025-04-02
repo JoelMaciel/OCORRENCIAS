@@ -132,7 +132,7 @@ export class CreateBatalhaoPoliciaCorpoGuarda1743543567858 implements MigrationI
           {
             name: "role",
             type: "enum",
-            enum: ["ROOT", "ADMIN", "USUARIO"], // Valores do enum RoleType
+            enum: ["ROOT", "ADMIN", "USUARIO"],
             default: "'USUARIO'",
           },
         ],

@@ -1,7 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { IViaturaRepository } from "../../repositories/interfaces/IViaturaRepository";
-import { CreateViaturaSchema } from "../../dtos/schemas/CreateViaturaSchema";
-import { z } from "zod";
+import { CreateViaturaInput } from "../../dtos/schemas/CreateViaturaSchema";
 import { ViaturaResponseDTO } from "../../dtos/response/ViaturaResponseDTO";
 import { IBatalhaoRepository } from "../../repositories/interfaces/IBatalhaoRepository";
 import AppError from "../../../../errors/AppError";
@@ -14,7 +13,7 @@ export class CriarViaturaUseCase {
     @inject("BatalhaoRepository") private readonly batalhaoRepository: IBatalhaoRepository
   ) {}
 
-  public async execute(dto: z.infer<typeof CreateViaturaSchema>): Promise<ViaturaResponseDTO> {
+  public async execute(dto: CreateViaturaInput): Promise<ViaturaResponseDTO> {
     const batalhao = await this.batalhaoRepository.findById(dto.batalhaoId);
 
     if (!batalhao) {

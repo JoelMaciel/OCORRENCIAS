@@ -27,7 +27,7 @@ export class Viatura {
   })
   status: StatusViatura;
 
-  @OneToOne(() => Ocorrencia)
-  @JoinColumn()
-  ocorrencia: Ocorrencia;
+  // @OneToOne(() => Ocorrencia)
+  // @JoinColumn()
+  // ocorrencia: Ocorrencia;
 }

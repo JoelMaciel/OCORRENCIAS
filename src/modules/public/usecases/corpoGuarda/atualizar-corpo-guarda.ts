@@ -4,8 +4,7 @@ import { AppDataSource } from "../../../../../ormconfig";
 import { Policial } from "../../entities/Policial";
 import { CorpoGuardaResponseDTO } from "../../dtos/response/CorpoGuardaResponseDTO ";
 import AppError from "../../../../errors/AppError";
-import { z } from "zod";
-import { AtualizarCorpoGuardaSchema } from "../../dtos/schemas/AtualizarCorpoGuardaSchema";
+import { AtualizarCorpoGuardaInput } from "../../dtos/schemas/AtualizarCorpoGuardaSchema";
 import { CorpoGuarda } from "../../entities/CorpoGuarda";
 
 @injectable()
@@ -18,7 +17,7 @@ export class AtualizarCorpoGuardaUseCase {
 
   public async execute(
     id: string,
-    dto: z.infer<typeof AtualizarCorpoGuardaSchema>
+    dto: AtualizarCorpoGuardaInput
   ): Promise<CorpoGuardaResponseDTO> {
     const corpoGuarda = await this.corpoGuardaRepository.findById(id);
 
@@ -36,7 +35,7 @@ export class AtualizarCorpoGuardaUseCase {
 
     const data: Partial<CorpoGuarda> = { policiais };
 
-    const daata = await this.corpoGuardaRepository.update(id, data);
-    return new CorpoGuardaResponseDTO(corpoGuarda);
+    const updatedCorpoGuarda = await this.corpoGuardaRepository.update(id, data);
+    return new CorpoGuardaResponseDTO(updatedCorpoGuarda);
   }
 }
