@@ -4,8 +4,8 @@ import { BatalhaoRepository } from "../modules/public/repositories/BatalhaoRepos
 import { PolicialRepository } from "../modules/public/repositories/PolicialRepository";
 import { CorpoGuardaRepository } from "../modules/public/repositories/CorpoGuardaRepository";
 import { OcorrenciaRepository } from "../modules/public/repositories/OcorrenciaRepository";
-import { IRoleRepository } from "../modules/public/repositories/interfaces/IRoleRepository";
 import { RoleRepository } from "../modules/public/repositories/RoleRepository";
+import { AcusadoRepository } from "../modules/public/repositories/AcusadoRepository";
 
 container.registerSingleton("ViaturaRepository", ViaturaRepository);
 
@@ -18,3 +18,5 @@ container.registerSingleton("RoleRepository", RoleRepository);
 container.registerSingleton("CorpoGuardaRepository", CorpoGuardaRepository);
 
 container.registerSingleton("OcorrenciaRepository", OcorrenciaRepository);
+
+container.registerSingleton("AcusadoRepository", AcusadoRepository);

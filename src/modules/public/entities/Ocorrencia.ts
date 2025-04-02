@@ -59,8 +59,8 @@ export class Ocorrencia {
   updatedAt: Date;
 
   @ManyToOne(() => CorpoGuarda, (guarda) => guarda.ocorrencias)
-  @JoinColumn({ name: "guarda_quartel_id" })
-  guardaQuartel: CorpoGuarda;
+  @JoinColumn({ name: "comandante_guarda_id" })
+  comandanteGuarda: CorpoGuarda;
 
   @ManyToOne(() => Policial, (policial) => policial.ocorrenciasRegistradas)
   @JoinColumn({ name: "registrado_por_id" })
