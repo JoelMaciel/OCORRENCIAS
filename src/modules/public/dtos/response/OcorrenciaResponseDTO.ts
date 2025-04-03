@@ -12,9 +12,8 @@ export class OcorrenciaResponseDTO {
   guardaQuartel: string;
   registradoPor: string;
   policiaisEnvolvidos: string[];
-  viatura: string | null;
-  dataHoraInicial: Date;
-  dataHoraFinal: Date;
+  dataHoraInicial: string;
+  dataHoraFinal: string;
   delegaciaDestino: string;
   delegadoResponsavel: string;
   numeroProcedimento: string;
@@ -30,16 +29,10 @@ export class OcorrenciaResponseDTO {
     this.status = ocorrencia.status;
     this.createdAt = ocorrencia.createdAt;
     this.updatedAt = ocorrencia.updatedAt;
-
-    //this.guardaQuartel = ocorrencia.guardaQuartel?.comandante || "Não informado";
-    this.registradoPor = ocorrencia.registradoPor?.nome || "Não informado";
-    this.policiaisEnvolvidos =
-      ocorrencia.policiaisEnvolvidos?.map((policial) => policial.nome) || [];
-    this.viatura = ocorrencia.viatura?.placa || null;
-
-    // Campos adicionais
+    this.registradoPor = ocorrencia.corpoGuarda.comandante.id;
     this.delegaciaDestino = ocorrencia.delegaciaDestino;
     this.delegadoResponsavel = ocorrencia.delegadoResponsavel;
     this.numeroProcedimento = ocorrencia.numeroProcedimento;
+    this.guardaQuartel = ocorrencia.corpoGuarda.id;
   }
 }

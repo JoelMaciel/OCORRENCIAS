@@ -3,9 +3,10 @@ import { ViaturaRepository } from "../modules/public/repositories/ViaturaReposit
 import { BatalhaoRepository } from "../modules/public/repositories/BatalhaoRepository";
 import { PolicialRepository } from "../modules/public/repositories/PolicialRepository";
 import { CorpoGuardaRepository } from "../modules/public/repositories/CorpoGuardaRepository";
-import { OcorrenciaRepository } from "../modules/public/repositories/OcorrenciaRepository";
 import { RoleRepository } from "../modules/public/repositories/RoleRepository";
 import { AcusadoRepository } from "../modules/public/repositories/AcusadoRepository";
+import { OcorrenciaRepository } from "../modules/public/repositories/OcorrenciaRepository";
+import { OcorrenciaPolicialRepository } from "../modules/public/repositories/OcorrenciaPolicialRepository";
 
 container.registerSingleton("ViaturaRepository", ViaturaRepository);
 
@@ -20,3 +21,5 @@ container.registerSingleton("CorpoGuardaRepository", CorpoGuardaRepository);
 container.registerSingleton("OcorrenciaRepository", OcorrenciaRepository);
 
 container.registerSingleton("AcusadoRepository", AcusadoRepository);
+
+container.registerSingleton("OcorrenciaPolicialRepository", OcorrenciaPolicialRepository);

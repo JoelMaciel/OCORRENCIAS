@@ -7,11 +7,17 @@ export class OcorrenciaRepository implements IOcorrenciaRepository {
 
   public async create(data: Partial<Ocorrencia>): Promise<Ocorrencia> {
     const ocorrencia = this.ocorrenciaRepository.create(data);
-    console.log(ocorrencia);
 
     const savedOcorrencia = await this.ocorrenciaRepository.save(ocorrencia);
-    console.log(" +++++++++++++++++++++++*********************Ocorrência salva:", savedOcorrencia);
 
     return savedOcorrencia;
+  }
+
+  public async existsByMOcorrencia(mOcorrencia: string): Promise<boolean> {
+    const ocorrenciaExistente = await this.ocorrenciaRepository.findOne({
+      where: { mOcorrencia },
+    });
+
+    return !!ocorrenciaExistente;
   }
 }
