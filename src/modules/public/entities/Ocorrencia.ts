@@ -73,7 +73,7 @@ export class Ocorrencia {
   })
   policiaisEnvolvidos: OcorrenciaPolicial[];
 
-  @OneToOne(() => Viatura)
+  @OneToOne(() => Viatura, (viatura) => viatura.ocorrencia)
   viatura: Viatura;
 
   @OneToMany(() => Arma, (arma) => arma.ocorrencia)

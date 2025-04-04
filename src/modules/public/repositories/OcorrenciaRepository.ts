@@ -13,6 +13,49 @@ export class OcorrenciaRepository implements IOcorrenciaRepository {
     return savedOcorrencia;
   }
 
+  public async findById(id: string): Promise<Ocorrencia | null> {
+    return await this.ocorrenciaRepository
+      .createQueryBuilder("ocorrencia")
+      .leftJoinAndSelect("ocorrencia.corpoGuarda", "corpoGuarda")
+      .leftJoinAndSelect("corpoGuarda.comandante", "comandante")
+      .leftJoinAndSelect("ocorrencia.policiaisEnvolvidos", "policiaisEnvolvidos")
+      .leftJoinAndSelect("ocorrencia.registradoPor", "registradoPor")
+      .leftJoinAndSelect("policiaisEnvolvidos.policial", "policial")
+      .leftJoinAndSelect("ocorrencia.viatura", "viatura")
+      .select([
+        "ocorrencia.id",
+        "ocorrencia.mOcorrencia",
+        "ocorrencia.dataHoraInicial",
+        "ocorrencia.dataHoraFinal",
+        "ocorrencia.tipoOcorrencia",
+        "ocorrencia.artigo",
+        "ocorrencia.resumo",
+        "ocorrencia.status",
+        "ocorrencia.createdAt",
+        "ocorrencia.updatedAt",
+        "ocorrencia.delegaciaDestino",
+        "ocorrencia.delegadoResponsavel",
+        "ocorrencia.numeroProcedimento",
+        "corpoGuarda.id",
+        "corpoGuarda.dataCriacao",
+        "corpoGuarda.dataAtualizacao",
+        "comandante.id",
+        "comandante.nome",
+        "comandante.matricula",
+        "comandante.id",
+        "comandante.nome",
+        "policiaisEnvolvidos.id",
+        "policial.matricula",
+        "policial.nome",
+        "registradoPor.nome",
+        "registradoPor.matricula",
+        "viatura.id",
+        "viatura.prefixo",
+      ])
+      .where("ocorrencia.id = :id", { id })
+      .getOne();
+  }
+
   public async existsByMOcorrencia(mOcorrencia: string): Promise<boolean> {
     const ocorrenciaExistente = await this.ocorrenciaRepository.findOne({
       where: { mOcorrencia },
