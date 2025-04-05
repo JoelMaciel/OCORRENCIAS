@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const AtualizarPolicialBatalhaoSchema = z.object({
+export const UpdatePoliciaBatalhaoSchema = z.object({
   batalhaoId: z.string({ message: "O campo postoGraducao é obrigatorio" }),
   contato: z
     .string({ required_error: "O campo 'contato' é obrigatório." })
@@ -8,4 +8,4 @@ export const AtualizarPolicialBatalhaoSchema = z.object({
     .max(15, { message: "O campo 'contato' deve ter no máximo 15 caracteres." }),
 });
 
-export type AtualizarPoliciaBatalhaoInput = z.infer<typeof AtualizarPolicialBatalhaoSchema>;
+export type UpdatePoliciaBatalhaoInput = z.infer<typeof UpdatePoliciaBatalhaoSchema>;

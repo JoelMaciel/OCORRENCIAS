@@ -5,7 +5,7 @@ import { IBatalhaoRepository } from "../../repositories/interfaces/IBatalhaoRepo
 import { DeepPartial } from "typeorm";
 import { Policial } from "../../entities/Policial";
 import AppError from "../../../../errors/AppError";
-import { AtualizarPoliciaBatalhaoInput } from "../../dtos/schemas/AtualizarPolicialBatalhaoSchema";
+import { UpdatePoliciaBatalhaoInput } from "../../dtos/schemas/AtualizarPoliciaBatalhaoSchema";
 
 @injectable()
 export class AtualizarPoliciaBatalhaoUseCase {
@@ -14,10 +14,7 @@ export class AtualizarPoliciaBatalhaoUseCase {
     @inject("BatalhaoRepository") private readonly batalhaoRepository: IBatalhaoRepository
   ) {}
 
-  public async execute(
-    id: string,
-    dto: AtualizarPoliciaBatalhaoInput
-  ): Promise<PolicialResponseDTO> {
+  public async execute(id: string, dto: UpdatePoliciaBatalhaoInput): Promise<PolicialResponseDTO> {
     const policial = await this.policialRepository.findById(id);
 
     if (!policial) {

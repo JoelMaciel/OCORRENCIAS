@@ -50,7 +50,13 @@ export class CriarOcorrenciaUseCase {
       dto.policiaisEnvolvidos
     );
 
-    return new OcorrenciaResponseDTO(ocorrenciaSalva);
+    const ocorrenciaCompleta = await this.ocorrenciaRepository.findById(ocorrenciaSalva.id);
+
+    if (!ocorrenciaCompleta) {
+      throw new AppError("Ocorrencia não encontrado.", 500);
+    }
+
+    return new OcorrenciaResponseDTO(ocorrenciaCompleta);
   }
 
   private async validateCorpoGuarda(guardaQuartelId: string) {

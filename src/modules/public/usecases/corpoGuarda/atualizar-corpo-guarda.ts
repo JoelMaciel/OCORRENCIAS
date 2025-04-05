@@ -4,8 +4,8 @@ import { AppDataSource } from "../../../../../ormconfig";
 import { Policial } from "../../entities/Policial";
 import { CorpoGuardaResponseDTO } from "../../dtos/response/CorpoGuardaResponseDTO ";
 import AppError from "../../../../errors/AppError";
-import { AtualizarCorpoGuardaInput } from "../../dtos/schemas/AtualizarCorpoGuardaSchema";
 import { CorpoGuarda } from "../../entities/CorpoGuarda";
+import { UpdateCorpoGuardaInput } from "../../dtos/schemas/UpdateCorpoGuardaSchema";
 
 @injectable()
 export class AtualizarCorpoGuardaUseCase {
@@ -15,10 +15,7 @@ export class AtualizarCorpoGuardaUseCase {
 
   private policiaRepository = AppDataSource.getRepository(Policial);
 
-  public async execute(
-    id: string,
-    dto: AtualizarCorpoGuardaInput
-  ): Promise<CorpoGuardaResponseDTO> {
+  public async execute(id: string, dto: UpdateCorpoGuardaInput): Promise<CorpoGuardaResponseDTO> {
     const corpoGuarda = await this.corpoGuardaRepository.findById(id);
 
     if (!corpoGuarda) {

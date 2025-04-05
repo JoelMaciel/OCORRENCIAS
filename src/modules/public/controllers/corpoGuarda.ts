@@ -6,7 +6,7 @@ import { BuscarCorpoGuardaUseCase } from "../usecases/corpoGuarda/buscar-corpo-g
 import { ListarCorpoGuardaUseCase } from "../usecases/corpoGuarda/listar-corpo-guarda";
 import { ValidationSchema } from "../dtos/validation/ValidateSchema";
 import { CreateCorpoGuardaSchema } from "../dtos/schemas/CreateCorpoGuardaSchema";
-import { AtualizarCorpoGuardaSchema } from "../dtos/schemas/AtualizarCorpoGuardaSchema";
+import { UpdateCorpoGuardaSchema } from "../dtos/schemas/UpdateCorpoGuardaSchema";
 
 export class CorpoGuardaController {
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -58,7 +58,7 @@ export class CorpoGuardaController {
 
       const { id } = req.params;
 
-      const dto = await ValidationSchema.validate(AtualizarCorpoGuardaSchema, req.body);
+      const dto = await ValidationSchema.validate(UpdateCorpoGuardaSchema, req.body);
 
       const corpoGuarda = await atualizaCorpoGuardaUseCase.execute(id, dto);
 

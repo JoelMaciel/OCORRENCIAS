@@ -13,6 +13,36 @@ export class OcorrenciaRepository implements IOcorrenciaRepository {
     return savedOcorrencia;
   }
 
+  public async update(id: string, data: Partial<Ocorrencia>): Promise<Ocorrencia> {
+    const ocorrencia = await this.ocorrenciaRepository
+      .createQueryBuilder("ocorrencia")
+      .leftJoinAndSelect("ocorrencia.corpoGuarda", "corpoGuarda")
+      .leftJoinAndSelect("corpoGuarda.comandante", "comandante")
+      .leftJoinAndSelect("ocorrencia.registradoPor", "registradoPor")
+      .leftJoinAndSelect("ocorrencia.policiaisEnvolvidos", "policiaisEnvolvidos")
+      .leftJoinAndSelect("policiaisEnvolvidos.policial", "policial")
+      .where("ocorrencia.id = :id", { id })
+      .getOneOrFail();
+
+    await this.ocorrenciaRepository
+      .createQueryBuilder()
+      .update(Ocorrencia)
+      .set(data)
+      .where("id = :id", { id })
+      .execute();
+
+    return await this.ocorrenciaRepository.findOneOrFail({
+      where: { id },
+      relations: [
+        "corpoGuarda",
+        "corpoGuarda.comandante",
+        "registradoPor",
+        "policiaisEnvolvidos",
+        "policiaisEnvolvidos.policial",
+      ],
+    });
+  }
+
   public async findById(id: string): Promise<Ocorrencia | null> {
     return await this.ocorrenciaRepository
       .createQueryBuilder("ocorrencia")
@@ -47,6 +77,7 @@ export class OcorrenciaRepository implements IOcorrenciaRepository {
         "policiaisEnvolvidos.id",
         "policial.matricula",
         "policial.nome",
+        "registradoPor.id",
         "registradoPor.nome",
         "registradoPor.matricula",
         "viatura.id",
