@@ -26,7 +26,7 @@ export class OcorrenciasController {
       const dto = await ValidationSchema.validate(UpdateOcorrenciaSchema, req.body);
 
       const updatedOcorrencia = await atualizarOcorrenciaUseCase.execute(id, dto);
-      res.status(200).json();
+      res.status(200).json(updatedOcorrencia);
     } catch (error) {
       next(error);
     }

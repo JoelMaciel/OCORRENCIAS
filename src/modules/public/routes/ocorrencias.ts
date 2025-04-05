@@ -7,7 +7,7 @@ const ocorrenciasController = new OcorrenciasController();
 
 ocorrenciasRoutes.post("/", ocorrenciasController.create);
 ocorrenciasRoutes.get("/:id", ocorrenciasController.findById);
-ocorrenciasRoutes.put("/:id", ocorrenciasController.update);
+ocorrenciasRoutes.patch("/:id", ocorrenciasController.update);
 // ocorrenciasRoutes.delete("/:id", ocorrenciasController.delete);
 // ocorrenciasRoutes.get("/", ocorrenciasController.findAll);
 

@@ -5,7 +5,7 @@ import { IBatalhaoRepository } from "../../repositories/interfaces/IBatalhaoRepo
 import { DeepPartial } from "typeorm";
 import { Policial } from "../../entities/Policial";
 import AppError from "../../../../errors/AppError";
-import { UpdatePoliciaBatalhaoInput } from "../../dtos/schemas/AtualizarPoliciaBatalhaoSchema";
+import { UpdatePoliciaBatalhaoInput } from "../../dtos/schemas/UpdatePoliciaBatalhaoSchema";
 
 @injectable()
 export class AtualizarPoliciaBatalhaoUseCase {

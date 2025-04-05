@@ -3,7 +3,6 @@ import { IOcorrenciaRepository } from "../../repositories/interfaces/IOcorrencia
 import { OcorrenciaResponseDTO } from "../../dtos/response/OcorrenciaResponseDTO";
 import { UpdateOcorrenciaInput } from "../../dtos/schemas/UpdateOcorrenciaSchema";
 import AppError from "../../../../errors/AppError";
-import { toEnderecoEntity } from "../../dtos/converter/EnderecoConverter";
 
 @injectable()
 export class AtualizarOcorrenciaUseCase {
@@ -17,14 +16,16 @@ export class AtualizarOcorrenciaUseCase {
     if (!ocorrencia) {
       throw new AppError("Ocorrencia não encontrada", 404);
     }
+    await this.validateMOcorrenciaDuplicado(dto.mOcorrencia);
 
-    const endereco = toEnderecoEntity(dto.endereco);
-    const data = {
-      ...dto,
-      endereco: endereco,
-    };
-
-    const updatedOcorrencia = await this.ocorrenciaRepository.update(id, data);
+    const updatedOcorrencia = await this.ocorrenciaRepository.update(id, dto);
     return new OcorrenciaResponseDTO(updatedOcorrencia);
+  }
+
+  private async validateMOcorrenciaDuplicado(mOcorrencia: string) {
+    const mOcorrenciaDuplicado = await this.ocorrenciaRepository.existsByMOcorrencia(mOcorrencia);
+    if (mOcorrenciaDuplicado) {
+      throw new AppError("Já existe um M-Ocorrência com este número.", 409);
+    }
   }
 }

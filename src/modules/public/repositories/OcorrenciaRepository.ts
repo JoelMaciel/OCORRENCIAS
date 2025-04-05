@@ -18,7 +18,6 @@ export class OcorrenciaRepository implements IOcorrenciaRepository {
       .createQueryBuilder("ocorrencia")
       .leftJoinAndSelect("ocorrencia.corpoGuarda", "corpoGuarda")
       .leftJoinAndSelect("corpoGuarda.comandante", "comandante")
-      .leftJoinAndSelect("ocorrencia.registradoPor", "registradoPor")
       .leftJoinAndSelect("ocorrencia.policiaisEnvolvidos", "policiaisEnvolvidos")
       .leftJoinAndSelect("policiaisEnvolvidos.policial", "policial")
       .where("ocorrencia.id = :id", { id })
@@ -36,7 +35,6 @@ export class OcorrenciaRepository implements IOcorrenciaRepository {
       relations: [
         "corpoGuarda",
         "corpoGuarda.comandante",
-        "registradoPor",
         "policiaisEnvolvidos",
         "policiaisEnvolvidos.policial",
       ],

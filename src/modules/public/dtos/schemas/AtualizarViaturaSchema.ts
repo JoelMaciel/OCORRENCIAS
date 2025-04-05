@@ -1,10 +1,10 @@
 import { z } from "zod";
 
-export const AtualizarViaturaSchema = z.object({
+export const UpdateViaturaSchema = z.object({
   prefixo: z.string({ message: "O campo 'nome' é obrigatório." }),
   batalhaoId: z
     .string({ message: "O campo 'batalhaoId' é obrigatório." })
     .uuid({ message: "O campo batalhaoId deve ser um UUID válido" }),
 });
 
-export type AtualizarViaturaInput = z.infer<typeof AtualizarViaturaSchema>;
+export type UpdateViaturaInput = z.infer<typeof UpdateViaturaSchema>;

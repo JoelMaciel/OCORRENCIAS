@@ -89,6 +89,7 @@ export class CriarOcorrenciaUseCase {
       throw new AppError("Já existe um M-Ocorrência com este número.", 409);
     }
   }
+
   private async validatePoliciaisEnvolvidos(policiaisIds: string[]) {
     const policiaisEncontrados = await this.policialRepository.findByIds(policiaisIds);
 

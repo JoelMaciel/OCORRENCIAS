@@ -8,8 +8,8 @@ import { AtualizarPoliciaBatalhaoUseCase } from "../usecases/policial/atualizar-
 import { AtualizarPostoGraduacaolUseCase } from "../usecases/policial/atualizar-posto-graduacao";
 import { ValidationSchema } from "../dtos/validation/ValidateSchema";
 import { CreatePolicialSchema } from "../dtos/schemas/CreatePolicialSchema";
-import { AtualizarPostoGraduacaoSchema } from "../dtos/schemas/AtualizarPostoGraduacaoSchema";
-import { UpdatePoliciaBatalhaoSchema } from "../dtos/schemas/AtualizarPoliciaBatalhaoSchema";
+import { UpdatePoliciaBatalhaoSchema } from "../dtos/schemas/UpdatePoliciaBatalhaoSchema";
+import { UpdatePostoGraduacaoSchema } from "../dtos/schemas/AtualizarPostoGraduacaoSchema";
 
 export class PoliciasController {
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -68,7 +68,7 @@ export class PoliciasController {
     try {
       const atualizarPostoGraduacaolUseCase = container.resolve(AtualizarPostoGraduacaolUseCase);
       const { id } = req.params;
-      const dto = await ValidationSchema.validate(AtualizarPostoGraduacaoSchema, req.body);
+      const dto = await ValidationSchema.validate(UpdatePostoGraduacaoSchema, req.body);
 
       const policial = await atualizarPostoGraduacaolUseCase.execute(id, dto);
       res.status(200).json(policial);

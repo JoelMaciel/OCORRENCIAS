@@ -7,10 +7,10 @@ import { BuscarViaturaUseCase } from "../usecases/viatura/buscar-viatura";
 import { DeletarViaturaUseCase } from "../usecases/viatura/deletar-viatura";
 import { ValidationSchema } from "../dtos/validation/ValidateSchema";
 import { CreateViaturaSchema } from "../dtos/schemas/CreateViaturaSchema";
-import { AtualizarViaturaSchema } from "../dtos/schemas/AtualizarViaturaSchema";
 import { VincularOcorrenciaAViaturaUseCase } from "../usecases/viatura/vincular-ocorrencia";
 import { VincularOcorrenciaSchema } from "../dtos/schemas/VincularOcorrenciaSchema";
 import { json } from "stream/consumers";
+import { UpdateViaturaSchema } from "../dtos/schemas/AtualizarViaturaSchema";
 
 export class ViaturasController {
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -40,7 +40,7 @@ export class ViaturasController {
     try {
       const atualizaViaturaUseCase = container.resolve(AtualizarViaturaUseCase);
       const { id } = req.params;
-      const dto = await ValidationSchema.validate(AtualizarViaturaSchema, req.body);
+      const dto = await ValidationSchema.validate(UpdateViaturaSchema, req.body);
 
       const updatedViatura = await atualizaViaturaUseCase.execute(id, dto);
       res.status(200).json(updatedViatura);
