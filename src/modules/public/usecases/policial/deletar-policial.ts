@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { IPolicialRepository } from "../../repositories/interfaces/IPolicialRepository";
 import AppError from "../../../../errors/AppError";
+import PoliciaNotFoundException from "../../../../exceptions/PoliciaNotFoundException";
 
 @injectable()
 export class DeletarPolicialUseCase {
@@ -12,7 +13,7 @@ export class DeletarPolicialUseCase {
     const policial = await this.policialRepository.findById(id);
 
     if (!policial) {
-      throw new AppError("Policial não encontrado", 404);
+      throw new PoliciaNotFoundException();
     }
 
     await this.policialRepository.delete(id);

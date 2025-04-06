@@ -2,7 +2,8 @@ import { inject, injectable } from "tsyringe";
 import { IOcorrenciaRepository } from "../../repositories/interfaces/IOcorrenciaRepository";
 import { OcorrenciaResponseDTO } from "../../dtos/response/OcorrenciaResponseDTO";
 import { UpdateOcorrenciaInput } from "../../dtos/schemas/UpdateOcorrenciaSchema";
-import AppError from "../../../../errors/AppError";
+import OcorrenciaNotFoundException from "../../../../exceptions/OcorrenciaNotFoundException";
+import MOcorrenciaAlredyExistsException from "../../../../exceptions/MOcorrenciaAlreadyExistsException";
 
 @injectable()
 export class AtualizarOcorrenciaUseCase {
@@ -14,8 +15,9 @@ export class AtualizarOcorrenciaUseCase {
     const ocorrencia = await this.ocorrenciaRepository.findById(id);
 
     if (!ocorrencia) {
-      throw new AppError("Ocorrencia não encontrada", 404);
+      throw new OcorrenciaNotFoundException();
     }
+
     await this.validateMOcorrenciaDuplicado(dto.mOcorrencia);
 
     const updatedOcorrencia = await this.ocorrenciaRepository.update(id, dto);
@@ -25,7 +27,7 @@ export class AtualizarOcorrenciaUseCase {
   private async validateMOcorrenciaDuplicado(mOcorrencia: string) {
     const mOcorrenciaDuplicado = await this.ocorrenciaRepository.existsByMOcorrencia(mOcorrencia);
     if (mOcorrenciaDuplicado) {
-      throw new AppError("Já existe um M-Ocorrência com este número.", 409);
+      throw new MOcorrenciaAlredyExistsException(mOcorrencia);
     }
   }
 }

@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { ICorpoGuardaRepository } from "../../repositories/interfaces/ICorpoGuardaRepository";
 import { CorpoGuardaResponseDTO } from "../../dtos/response/CorpoGuardaResponseDTO ";
-import AppError from "../../../../errors/AppError";
+import CorpoGuardaNotFoundException from "../../../../exceptions/CorpoGuardaNotFoundException";
 
 @injectable()
 export class BuscarCorpoGuardaUseCase {
@@ -14,7 +14,7 @@ export class BuscarCorpoGuardaUseCase {
     const corpoGuarda = await this.corpoGuardaRepository.findById(id);
 
     if (!corpoGuarda) {
-      throw new AppError("Corpo Guarda não encontrado", 404);
+      throw new CorpoGuardaNotFoundException();
     }
 
     return new CorpoGuardaResponseDTO(corpoGuarda);

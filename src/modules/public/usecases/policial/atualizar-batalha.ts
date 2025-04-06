@@ -6,6 +6,8 @@ import { DeepPartial } from "typeorm";
 import { Policial } from "../../entities/Policial";
 import AppError from "../../../../errors/AppError";
 import { UpdatePoliciaBatalhaoInput } from "../../dtos/schemas/UpdatePoliciaBatalhaoSchema";
+import PoliciaNotFoundException from "../../../../exceptions/PoliciaNotFoundException";
+import BatalhaoNotFoundException from "../../../../exceptions/BatalhaoNotFoundException ";
 
 @injectable()
 export class AtualizarPoliciaBatalhaoUseCase {
@@ -18,13 +20,13 @@ export class AtualizarPoliciaBatalhaoUseCase {
     const policial = await this.policialRepository.findById(id);
 
     if (!policial) {
-      throw new AppError("Policial não encontrado", 404);
+      throw new PoliciaNotFoundException();
     }
 
     const batalhao = await this.batalhaoRepository.findById(dto.batalhaoId);
 
     if (!batalhao) {
-      throw new AppError("Batalhão não encontrado", 404);
+      throw new BatalhaoNotFoundException();
     }
 
     const updateData: DeepPartial<Policial> = {

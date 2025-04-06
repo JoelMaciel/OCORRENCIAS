@@ -9,6 +9,8 @@ import { toEnderecoEntity } from "../../dtos/converter/EnderecoConverter";
 import { IOcorrenciaPolicialRepository } from "../../repositories/interfaces/IOcorrenciaPolicialRepository";
 import { CorpoGuarda } from "../../entities/CorpoGuarda";
 import { IPolicialRepository } from "../../repositories/interfaces/IPolicialRepository";
+import OcorrenciaNotFoundException from "../../../../exceptions/OcorrenciaNotFoundException";
+import MOcorrenciaAlredyExistsException from "../../../../exceptions/MOcorrenciaAlreadyExistsException";
 
 @injectable()
 export class CriarOcorrenciaUseCase {
@@ -53,7 +55,7 @@ export class CriarOcorrenciaUseCase {
     const ocorrenciaCompleta = await this.ocorrenciaRepository.findById(ocorrenciaSalva.id);
 
     if (!ocorrenciaCompleta) {
-      throw new AppError("Ocorrencia não encontrado.", 500);
+      throw new OcorrenciaNotFoundException();
     }
 
     return new OcorrenciaResponseDTO(ocorrenciaCompleta);
@@ -86,7 +88,7 @@ export class CriarOcorrenciaUseCase {
   private async validateMOcorrenciaDuplicado(mOcorrencia: string) {
     const mOcorrenciaDuplicado = await this.ocorrenciaRepository.existsByMOcorrencia(mOcorrencia);
     if (mOcorrenciaDuplicado) {
-      throw new AppError("Já existe um M-Ocorrência com este número.", 409);
+      throw new MOcorrenciaAlredyExistsException(mOcorrencia);
     }
   }
 

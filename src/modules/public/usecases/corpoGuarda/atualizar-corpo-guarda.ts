@@ -6,6 +6,7 @@ import { CorpoGuardaResponseDTO } from "../../dtos/response/CorpoGuardaResponseD
 import AppError from "../../../../errors/AppError";
 import { CorpoGuarda } from "../../entities/CorpoGuarda";
 import { UpdateCorpoGuardaInput } from "../../dtos/schemas/UpdateCorpoGuardaSchema";
+import CorpoGuardaNotFoundException from "../../../../exceptions/CorpoGuardaNotFoundException";
 
 @injectable()
 export class AtualizarCorpoGuardaUseCase {
@@ -19,7 +20,7 @@ export class AtualizarCorpoGuardaUseCase {
     const corpoGuarda = await this.corpoGuardaRepository.findById(id);
 
     if (!corpoGuarda) {
-      throw new AppError("Corpo Guarda não encontrado", 404);
+      throw new CorpoGuardaNotFoundException();
     }
 
     const policiais = await this.policiaRepository.find({

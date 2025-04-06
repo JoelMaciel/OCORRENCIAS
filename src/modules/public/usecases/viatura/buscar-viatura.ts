@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { IViaturaRepository } from "../../repositories/interfaces/IViaturaRepository";
-import AppError from "../../../../errors/AppError";
 import { ViaturaResponseDTO } from "../../dtos/response/ViaturaResponseDTO";
+import ViaturaNotFoundException from "../../../../exceptions/ViaturaNotFoundException";
 
 @injectable()
 export class BuscarViaturaUseCase {
@@ -13,7 +13,7 @@ export class BuscarViaturaUseCase {
     const viatura = await this.viaturaRepository.findById(id);
 
     if (!viatura) {
-      throw new AppError("Viatura não encontrada.", 404);
+      throw new ViaturaNotFoundException();
     }
     return new ViaturaResponseDTO(viatura);
   }

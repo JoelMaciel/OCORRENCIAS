@@ -6,6 +6,7 @@ import { AppDataSource } from "../../../../../ormconfig";
 import { Batalhao } from "../../entities/Batalhao";
 import { Policial } from "../../entities/Policial";
 import { CreateCorpoGuardaInput } from "../../dtos/schemas/CreateCorpoGuardaSchema";
+import BatalhaoNotFoundException from "../../../../exceptions/BatalhaoNotFoundException ";
 
 @injectable()
 export class CriarCorpoGuardaUseCase {
@@ -22,7 +23,7 @@ export class CriarCorpoGuardaUseCase {
     });
 
     if (!batalhao) {
-      throw new AppError("Batalhão não encontrado", 404);
+      throw new BatalhaoNotFoundException();
     }
 
     const comandante = await this.policialRepository.findOne({
