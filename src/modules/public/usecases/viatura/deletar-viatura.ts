@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { IViaturaRepository } from "../../repositories/interfaces/IViaturaRepository";
 import AppError from "../../../../errors/AppError";
+import ViaturaNotFoundException from "../../../../exceptions/ViaturaNotFoundException";
 
 @injectable()
 export class DeletarViaturaUseCase {
@@ -12,7 +13,7 @@ export class DeletarViaturaUseCase {
     const viatura = await this.viaturaRepository.findById(id);
 
     if (!viatura) {
-      throw new AppError("Viatura não encontrada", 404);
+      throw new ViaturaNotFoundException();
     }
     await this.viaturaRepository.delete(id);
   }

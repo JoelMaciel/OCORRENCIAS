@@ -4,10 +4,14 @@ import { IBatalhaoRepository } from "../../repositories/interfaces/IBatalhaoRepo
 import AppError from "../../../../errors/AppError";
 import { PolicialResponseDTO } from "../../dtos/response/PolicialResponseDTO";
 import { CreatePolicialInput } from "../../dtos/schemas/CreatePolicialSchema";
-import { PasswordHasher } from "../../../../utils/PasswordHasher";
 import { IRoleRepository } from "../../repositories/interfaces/IRoleRepository";
 import { RoleType } from "../../enums/RoleType";
 import { Role } from "../../entities/Role";
+import { PasswordHasher } from "../../../../utils/security/PasswordHasher";
+import BatalhaoNotFoundException from "../../../../exceptions/BatalhaoNotFoundException ";
+import MatriculaAlreadyExistsException from "../../../../exceptions/MatriculaAlreadyExistsException";
+import CPFAlreadyExistsException from "../../../../exceptions/CPFAlreadyExistsException";
+import EmailAlreadyExistsException from "../../../../exceptions/EmailAlreadyExistsException";
 
 @injectable()
 export class CriarPolicialUseCase {
@@ -48,7 +52,7 @@ export class CriarPolicialUseCase {
     const batalhao = await this.batalhaoRepository.findById(batalhaoId);
 
     if (!batalhao) {
-      throw new AppError("Batalhão não encontrado", 404);
+      throw new BatalhaoNotFoundException();
     }
   }
 
@@ -56,7 +60,7 @@ export class CriarPolicialUseCase {
     const existsByMatricula = await this.policialRepository.existsByMatricula(matricula);
 
     if (existsByMatricula) {
-      throw new AppError("Já existe um policial cadastrado com essa matrícula", 409);
+      throw new MatriculaAlreadyExistsException();
     }
   }
 
@@ -64,7 +68,7 @@ export class CriarPolicialUseCase {
     const existsByCpf = await this.policialRepository.existsByCpf(cpf);
 
     if (existsByCpf) {
-      throw new AppError("Já existe um policial cadastrado com esse CPF", 409);
+      throw new CPFAlreadyExistsException();
     }
   }
 
@@ -72,7 +76,7 @@ export class CriarPolicialUseCase {
     const existsByEmail = await this.policialRepository.existsByEmail(email);
 
     if (existsByEmail) {
-      throw new AppError("Já existe um policial cadastrado com esse email", 409);
+      throw new EmailAlreadyExistsException();
     }
   }
 }

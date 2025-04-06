@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import "./container";
+import "./containers";
 import express from "express";
 import { AppDataSource } from "../ormconfig";
 import { routes } from "./routes";

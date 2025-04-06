@@ -1,9 +1,10 @@
 import { inject, injectable } from "tsyringe";
 import { IViaturaRepository } from "../../repositories/interfaces/IViaturaRepository";
-import AppError from "../../../../errors/AppError";
 import { IBatalhaoRepository } from "../../repositories/interfaces/IBatalhaoRepository";
 import { ViaturaResponseDTO } from "../../dtos/response/ViaturaResponseDTO";
 import { UpdateViaturaInput } from "../../dtos/schemas/AtualizarViaturaSchema";
+import BatalhaoNotFoundException from "../../../../exceptions/BatalhaoNotFoundException ";
+import ViaturaNotFoundException from "../../../../exceptions/ViaturaNotFoundException";
 
 @injectable()
 export class AtualizarViaturaUseCase {
@@ -16,13 +17,13 @@ export class AtualizarViaturaUseCase {
     const batalhao = await this.batalhaoRepository.findById(dto.batalhaoId);
 
     if (!batalhao) {
-      throw new AppError("Batalhão não encotrado", 404);
+      throw new BatalhaoNotFoundException();
     }
 
     const viatura = await this.viaturaRepository.findById(id);
 
     if (!viatura) {
-      throw new AppError("Viatura não encontrada.", 404);
+      throw new ViaturaNotFoundException();
     }
 
     const dataViatura = {

@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { PolicialRepository } from "../../repositories/PolicialRepository";
 import { PolicialResponseDTO } from "../../dtos/response/PolicialResponseDTO";
-import AppError from "../../../../errors/AppError";
+import PoliciaNotFoundException from "../../../../exceptions/PoliciaNotFoundException";
 
 @injectable()
 export class BuscarPolicialUseCase {
@@ -13,7 +13,7 @@ export class BuscarPolicialUseCase {
     const policial = await this.policialRepository.findById(id);
 
     if (!policial) {
-      throw new AppError("Policial não encontrado", 404);
+      throw new PoliciaNotFoundException();
     }
 
     return new PolicialResponseDTO(policial);

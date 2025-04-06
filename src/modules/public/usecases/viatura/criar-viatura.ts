@@ -3,8 +3,8 @@ import { IViaturaRepository } from "../../repositories/interfaces/IViaturaReposi
 import { CreateViaturaInput } from "../../dtos/schemas/CreateViaturaSchema";
 import { ViaturaResponseDTO } from "../../dtos/response/ViaturaResponseDTO";
 import { IBatalhaoRepository } from "../../repositories/interfaces/IBatalhaoRepository";
-import AppError from "../../../../errors/AppError";
 import { StatusViatura } from "../../enums/StatusViatura";
+import BatalhaoNotFoundException from "../../../../exceptions/BatalhaoNotFoundException ";
 
 @injectable()
 export class CriarViaturaUseCase {
@@ -17,7 +17,7 @@ export class CriarViaturaUseCase {
     const batalhao = await this.batalhaoRepository.findById(dto.batalhaoId);
 
     if (!batalhao) {
-      throw new AppError("Batalhão não encontrado", 404);
+      throw new BatalhaoNotFoundException();
     }
 
     const dataViatura = {
