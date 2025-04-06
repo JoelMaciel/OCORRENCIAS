@@ -1,6 +1,7 @@
 import { Ocorrencia } from "../entities/Ocorrencia";
 import { AppDataSource } from "../../../../ormconfig";
 import { IOcorrenciaRepository } from "./interfaces/IOcorrenciaRepository";
+import { number } from "zod";
 
 export class OcorrenciaRepository implements IOcorrenciaRepository {
   constructor(private readonly ocorrenciaRepository = AppDataSource.getRepository(Ocorrencia)) {}
@@ -11,6 +12,65 @@ export class OcorrenciaRepository implements IOcorrenciaRepository {
     const savedOcorrencia = await this.ocorrenciaRepository.save(ocorrencia);
 
     return savedOcorrencia;
+  }
+
+  public async findAll(
+    page: number = 1,
+    limit: number = 10,
+    mOcorrencia?: string,
+    prefixoViatura?: string,
+    dataHoraInicial?: string,
+    dataHoraFinal?: string,
+    status?: string
+  ): Promise<[Ocorrencia[], number]> {
+    const skip = (page - 1) * limit;
+
+    const query = this.ocorrenciaRepository
+      .createQueryBuilder("ocorrencia")
+      .select([
+        "ocorrencia.id",
+        "ocorrencia.mOcorrencia",
+        "ocorrencia.dataHoraInicial",
+        "ocorrencia.dataHoraFinal",
+        "ocorrencia.status",
+      ])
+      .leftJoinAndSelect("ocorrencia.corpoGuarda", "corpoGuarda")
+      .leftJoinAndSelect("corpoGuarda.comandante", "comandante")
+      .leftJoinAndSelect("ocorrencia.registradoPor", "registradoPor")
+      .leftJoinAndSelect("ocorrencia.viatura", "viatura")
+      .leftJoinAndSelect("ocorrencia.policiaisEnvolvidos", "policiaisEnvolvidos")
+      .leftJoinAndSelect("policiaisEnvolvidos.policial", "policial")
+      .skip(skip)
+      .take(limit);
+
+    if (mOcorrencia) {
+      query.andWhere("ocorrencia.mOcorrencia ILIKE :mOcorrencia", {
+        mOcorrencia: `%${mOcorrencia}`,
+      });
+    }
+
+    if (status) {
+      query.andWhere("ocorrencia.status = :status", { status });
+    }
+
+    if (prefixoViatura) {
+      query.andWhere("viatura.prefixo ILIKE :prefixoViatura", {
+        prefixoViatura: `%${prefixoViatura}`,
+      });
+    }
+
+    if (dataHoraInicial && dataHoraFinal) {
+      query.andWhere("ocorrencia.dataHoraInicial BETWEEN :dataHoraInicial AND :dataHoraFinal", {
+        dataHoraInicial,
+        dataHoraFinal,
+      });
+    } else if (dataHoraInicial) {
+      query.andWhere("ocorrencia.dataHoraInicial >= :dataHoraInicial", { dataHoraInicial });
+    } else if (dataHoraFinal) {
+      query.andWhere("ocorrencia.dataHoraInicial <= :dataHoraFinal", { dataHoraFinal });
+    }
+
+    return await query.getManyAndCount();
   }
 
   public async update(id: string, data: Partial<Ocorrencia>): Promise<Ocorrencia> {
