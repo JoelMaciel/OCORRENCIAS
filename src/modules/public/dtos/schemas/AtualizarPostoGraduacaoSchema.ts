@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const AtualizarPostoGraduacaoSchema = z.object({
+export const UpdatePostoGraduacaoSchema = z.object({
   postoGraduacao: z.string({ message: "O campo postoGraduacao é obrigatorio" }),
   contato: z
     .string({ required_error: "O campo 'contato' é obrigatório." })
@@ -8,4 +8,4 @@ export const AtualizarPostoGraduacaoSchema = z.object({
     .max(15, { message: "O campo 'contato' deve ter no máximo 15 caracteres." }),
 });
 
-export type AtualizarPostoGraduacaoInput = z.infer<typeof AtualizarPostoGraduacaoSchema>;
+export type UpdatePostoGraduacaoInput = z.infer<typeof UpdatePostoGraduacaoSchema>;

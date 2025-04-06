@@ -21,20 +21,22 @@ import { Acusado } from "./Acusado";
 import { Vitima } from "./Vitima";
 import { ObjetoApreendido } from "./ObjetoApreendido";
 import { StatusOcorrencia } from "../enums/StatusOcorrencia";
+import { Endereco } from "./Endereco";
+import { OcorrenciaPolicial } from "./OcorrenciaPolicial";
 
 @Entity("ocorrencias")
 export class Ocorrencia {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ name: "m_ocorrencia", length: 30 })
+  @Column({ name: "m_ocorrencia", unique: true, length: 30 })
   mOcorrencia: string;
 
   @Column({ name: "data_hora_inicial" })
-  dataHoraInicial: Date;
+  dataHoraInicial: string;
 
   @Column({ name: "data_hora_final" })
-  dataHoraFinal: Date;
+  dataHoraFinal: string;
 
   @Column({ name: "tipo_ocorrencia", length: 100 })
   tipoOcorrencia: string;
@@ -58,23 +60,20 @@ export class Ocorrencia {
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
 
-  @ManyToOne(() => CorpoGuarda, (guarda) => guarda.ocorrencias)
-  @JoinColumn({ name: "guarda_quartel_id" })
-  guardaQuartel: CorpoGuarda;
+  @ManyToOne(() => CorpoGuarda, (guarda) => guarda.ocorrenciasRegistradas)
+  @JoinColumn({ name: "guarda_id" })
+  corpoGuarda: CorpoGuarda;
 
   @ManyToOne(() => Policial, (policial) => policial.ocorrenciasRegistradas)
   @JoinColumn({ name: "registrado_por_id" })
   registradoPor: Policial;
 
-  @ManyToMany(() => Policial, (policial) => policial.ocorrenciasEnvolvidas)
-  @JoinTable({
-    name: "ocorrencias_policiais",
-    joinColumn: { name: "ocorrencia_id" },
-    inverseJoinColumn: { name: "policial_id" },
+  @OneToMany(() => OcorrenciaPolicial, (ocorrenciaPolicial) => ocorrenciaPolicial.ocorrencia, {
+    cascade: true,
   })
-  policiaisEnvolvidos: Policial[];
+  policiaisEnvolvidos: OcorrenciaPolicial[];
 
-  @OneToOne(() => Viatura)
+  @OneToOne(() => Viatura, (viatura) => viatura.ocorrencia)
   viatura: Viatura;
 
   @OneToMany(() => Arma, (arma) => arma.ocorrencia)
@@ -95,7 +94,7 @@ export class Ocorrencia {
   @OneToMany(() => VeiculoApreendido, (veiculo) => veiculo.ocorrencia)
   veiculos: VeiculoApreendido[];
 
-  @Column({ name: "delegacia_destino", length: 30 })
+  @Column({ name: "delegacia_destino", length: 60 })
   delegaciaDestino: string;
 
   @Column({ name: "delegado_responsavel", length: 100 })
@@ -103,4 +102,8 @@ export class Ocorrencia {
 
   @Column({ name: "numero_procedimento", length: 50 })
   numeroProcedimento: string;
+
+  @OneToOne(() => Endereco, { cascade: true, eager: true })
+  @JoinColumn({ name: "endereco_id" })
+  endereco: Endereco;
 }

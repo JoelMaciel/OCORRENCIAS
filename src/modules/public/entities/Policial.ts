@@ -14,6 +14,7 @@ import { Ocorrencia } from "./Ocorrencia";
 import { CorpoGuarda } from "./CorpoGuarda";
 import { Batalhao } from "./Batalhao";
 import { Role } from "./Role";
+import { OcorrenciaPolicial } from "./OcorrenciaPolicial";
 
 @Entity("policiais")
 export class Policial {
@@ -66,8 +67,10 @@ export class Policial {
   @OneToMany(() => CorpoGuarda, (guarda) => guarda.comandante)
   comandanteDeGuarda: CorpoGuarda[];
 
-  @ManyToMany(() => Ocorrencia, (ocorrencia) => ocorrencia.policiaisEnvolvidos)
-  ocorrenciasEnvolvidas: Ocorrencia[];
+  @OneToMany(() => OcorrenciaPolicial, (ocorrenciaPolicial) => ocorrenciaPolicial.policial, {
+    cascade: true,
+  })
+  ocorrenciasEnvolvidas: OcorrenciaPolicial[];
 
   @ManyToMany(() => Role)
   @JoinTable({
