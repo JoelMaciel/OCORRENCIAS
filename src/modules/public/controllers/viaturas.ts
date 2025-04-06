@@ -10,7 +10,7 @@ import { CreateViaturaSchema } from "../dtos/schemas/CreateViaturaSchema";
 import { VincularOcorrenciaAViaturaUseCase } from "../usecases/viatura/vincular-ocorrencia";
 import { VincularOcorrenciaSchema } from "../dtos/schemas/VincularOcorrenciaSchema";
 import { json } from "stream/consumers";
-import { UpdateViaturaSchema } from "../dtos/schemas/AtualizarViaturaSchema";
+import { UpdateViaturaSchema } from "../dtos/schemas/UpdateViaturaSchema";
 
 export class ViaturasController {
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
