@@ -40,6 +40,6 @@ export class CorpoGuarda {
   })
   policiais: Policial[];
 
-  @OneToMany(() => Ocorrencia, (ocorrencia) => ocorrencia.guardaQuartel)
-  ocorrencias: Ocorrencia[];
+  @OneToMany(() => Ocorrencia, (ocorrencia) => ocorrencia.corpoGuarda)
+  ocorrenciasRegistradas: Ocorrencia[];
 }
