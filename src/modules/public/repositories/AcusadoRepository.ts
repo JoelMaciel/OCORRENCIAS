@@ -9,4 +9,15 @@ export class AcusadoRepository implements IAcusadoRepository {
     const newAcusado = this.acusadoRepository.create(data);
     return await this.acusadoRepository.save(newAcusado);
   }
+
+  public async findById(id: string): Promise<Acusado | null> {
+    return await this.acusadoRepository.findOne({
+      where: { id },
+      relations: ["endereco"],
+    });
+  }
+
+  public async delete(acusado: Acusado): Promise<void> {
+    await this.acusadoRepository.remove(acusado);
+  }
 }

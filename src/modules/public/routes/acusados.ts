@@ -6,5 +6,6 @@ const acusadosRoutes = Router();
 const acusadosController = new AcusadosController();
 
 acusadosRoutes.post("/:id", acusadosController.create);
+acusadosRoutes.delete("/:id", acusadosController.delete);
 
 export { acusadosRoutes };
