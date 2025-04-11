@@ -9,7 +9,7 @@ import { AtualizarPostoGraduacaolUseCase } from "../usecases/policial/atualizar-
 import { ValidationSchema } from "../dtos/validation/ValidateSchema";
 import { CreatePolicialSchema } from "../dtos/schemas/CreatePolicialSchema";
 import { UpdatePoliciaBatalhaoSchema } from "../dtos/schemas/UpdatePoliciaBatalhaoSchema";
-import { UpdatePostoGraduacaoSchema } from "../dtos/schemas/AtualizarPostoGraduacaoSchema";
+import { UpdatePostoGraduacaoSchema } from "../dtos/schemas/UpdatePostoGraduacaoSchema";
 
 export class PoliciasController {
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {

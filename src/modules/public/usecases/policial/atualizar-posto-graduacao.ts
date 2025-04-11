@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { IPolicialRepository } from "../../repositories/interfaces/IPolicialRepository";
 import { PolicialResponseDTO } from "../../dtos/response/PolicialResponseDTO";
-import { UpdatePostoGraduacaoInput } from "../../dtos/schemas/AtualizarPostoGraduacaoSchema";
+import { UpdatePostoGraduacaoInput } from "../../dtos/schemas/UpdatePostoGraduacaoSchema";
 import PoliciaNotFoundException from "../../../../exceptions/PoliciaNotFoundException";
 
 @injectable()
