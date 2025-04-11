@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -42,7 +43,8 @@ export class Acusado {
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
 
-  @OneToOne(() => Ocorrencia)
+  @ManyToOne(() => Ocorrencia, (ocorrencia) => ocorrencia.acusados)
+  @JoinColumn({ name: "ocorrencia_id" })
   ocorrencia: Ocorrencia;
 
   @OneToOne(() => Endereco, { cascade: true, eager: true })

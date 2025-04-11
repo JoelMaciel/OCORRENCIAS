@@ -2,7 +2,7 @@ import { inject, injectable } from "tsyringe";
 import { IViaturaRepository } from "../../repositories/interfaces/IViaturaRepository";
 import { IBatalhaoRepository } from "../../repositories/interfaces/IBatalhaoRepository";
 import { ViaturaResponseDTO } from "../../dtos/response/ViaturaResponseDTO";
-import { UpdateViaturaInput } from "../../dtos/schemas/AtualizarViaturaSchema";
+import { UpdateViaturaInput } from "../../dtos/schemas/UpdateViaturaSchema";
 import BatalhaoNotFoundException from "../../../../exceptions/BatalhaoNotFoundException ";
 import ViaturaNotFoundException from "../../../../exceptions/ViaturaNotFoundException";
 
