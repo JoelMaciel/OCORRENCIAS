@@ -85,7 +85,7 @@ export class PolicialRepository implements IPolicialRepository {
 
     if (matricula) {
       queryBuilder.where("LOWER(policial.matricula) LIKE LOWER(:matricula)", {
-        matricula: `${matricula}`,
+        matricula: `%${matricula}%`,
       });
     }
 

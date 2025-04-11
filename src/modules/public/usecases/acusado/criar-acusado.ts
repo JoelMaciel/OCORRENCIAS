@@ -5,6 +5,7 @@ import { AcusadoResponseDTO } from "../../dtos/response/AcusadoResponseDTO";
 import { toEnderecoEntity } from "../../dtos/converter/EnderecoConverter";
 import { IOcorrenciaRepository } from "../../repositories/interfaces/IOcorrenciaRepository";
 import OcorrenciaNotFoundException from "../../../../exceptions/OcorrenciaNotFoundException";
+import CPFAlreadyExistsException from "../../../../exceptions/CPFAlreadyExistsException";
 
 @injectable()
 export class CriarAcusadoUseCase {
@@ -15,11 +16,12 @@ export class CriarAcusadoUseCase {
 
   public async execute(id: string, dto: AcusadoRequestDTO): Promise<AcusadoResponseDTO> {
     const ocorrencia = await this.oorrenciaRepository.findById(id);
-    console.log(ocorrencia);
 
     if (!ocorrencia) {
       throw new OcorrenciaNotFoundException();
     }
+
+    await this.validateCpf(dto.cpf);
 
     const endereco = toEnderecoEntity(dto.endereco);
 
@@ -30,5 +32,12 @@ export class CriarAcusadoUseCase {
     });
 
     return new AcusadoResponseDTO(acusado);
+  }
+
+  private async validateCpf(cpf: string): Promise<void> {
+    const existsByCpf = await this.acusadoRepository.existsByCpf(cpf);
+    if (existsByCpf) {
+      throw new CPFAlreadyExistsException();
+    }
   }
 }

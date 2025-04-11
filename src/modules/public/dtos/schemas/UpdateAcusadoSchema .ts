@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { EnderecoSchema } from "./EnderecoSchema";
 
-export const CreateAcusadoSchema = z.object({
+export const UpdateAcusadoSchema = z.object({
   nome: z
     .string({ message: "O campo 'nome' é obrigatório." })
     .min(15, { message: "O campo 'nome' deve ter no minimo 15 caracteres." }),
@@ -26,4 +26,4 @@ export const CreateAcusadoSchema = z.object({
   endereco: EnderecoSchema,
 });
 
-export type AcusadoRequestDTO = z.infer<typeof CreateAcusadoSchema>;
+export type UpdateAcusadoRequestDTO = z.infer<typeof UpdateAcusadoSchema>;
