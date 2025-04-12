@@ -5,6 +5,7 @@ import { policiaisRoutes } from "./modules/public/routes/policiais";
 import { corpoGuardaRoutes } from "./modules/public/routes/corpoGuarda";
 import { ocorrenciasRoutes } from "./modules/public/routes/ocorrencias";
 import { acusadosRoutes } from "./modules/public/routes/acusados";
+import { armasRoutes } from "./modules/public/routes/armas";
 
 const routes = Router();
 
@@ -14,5 +15,6 @@ routes.use("/policiais", policiaisRoutes);
 routes.use("/corpoGuarda", corpoGuardaRoutes);
 routes.use("/ocorrencias", ocorrenciasRoutes);
 routes.use("/acusados", acusadosRoutes);
+routes.use("/armas", armasRoutes);
 
 export { routes };
