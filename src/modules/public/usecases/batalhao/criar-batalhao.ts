@@ -1,8 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { IBatalhaoRepository } from "../../repositories/interfaces/IBatalhaoRepository";
 import { BatalhaoResponseDTO } from "../../dtos/response/BatalhaoResponseDTO";
-import { z } from "zod";
-import { CreateBatalhaoSchema } from "../../dtos/schemas/CreateBatalhaoSchema";
+import { CreateBatalhaoInput } from "../../dtos/schemas/CreateBatalhaoSchema";
 import { toEnderecoEntity } from "../../dtos/converter/EnderecoConverter";
 
 @injectable()
@@ -11,7 +10,7 @@ export class CriarBatalhaoUseCase {
     @inject("BatalhaoRepository") private readonly batalhaoRepository: IBatalhaoRepository
   ) {}
 
-  public async execute(dto: z.infer<typeof CreateBatalhaoSchema>): Promise<BatalhaoResponseDTO> {
+  public async execute(dto: CreateBatalhaoInput): Promise<BatalhaoResponseDTO> {
     const endereco = toEnderecoEntity(dto.endereco);
 
     const batalhaoData = {
