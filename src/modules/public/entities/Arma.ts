@@ -23,13 +23,13 @@ export class Arma {
   @Column({ length: 80 })
   numeracao: string;
 
-  @CreateDateColumn({ name: "created-at" })
+  @CreateDateColumn({ name: "created_at" })
   createdAt: Date;
 
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
 
   @OneToOne(() => Ocorrencia)
-  @JoinColumn({ name: "endereco_id" })
+  @JoinColumn({ name: "ocorrencia_id" })
   ocorrencia: Ocorrencia;
 }

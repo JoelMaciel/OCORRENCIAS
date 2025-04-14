@@ -5,3 +5,5 @@ export const CreateBatalhaoSchema = z.object({
   nome: z.string({ message: "O campo 'nome' é obrigatório." }),
   endereco: EnderecoSchema,
 });
+
+export type CreateBatalhaoInput = z.infer<typeof CreateBatalhaoSchema>;
