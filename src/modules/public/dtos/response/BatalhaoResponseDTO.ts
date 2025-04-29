@@ -3,6 +3,7 @@ import { Batalhao } from "../../entities/Batalhao";
 export class BatalhaoResponseDTO {
   id: string;
   nome: string;
+  contato: string;
   dataCriacao: Date;
   dataAtualizacao: Date;
   endereco: {
@@ -17,6 +18,7 @@ export class BatalhaoResponseDTO {
 
   constructor(batalhao: Batalhao) {
     this.id = batalhao.id;
+    this.contato = batalhao.contato;
     this.nome = batalhao.nome;
     this.dataCriacao = batalhao.dataCriacao;
     this.dataAtualizacao = batalhao.dataAtualizacao;

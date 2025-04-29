@@ -18,6 +18,9 @@ export class Batalhao {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
+  @Column({ length: 20 })
+  contato: string;
+
   @Column({ length: 100 })
   nome: string;
 
