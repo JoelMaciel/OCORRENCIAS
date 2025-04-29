@@ -65,7 +65,9 @@ export class ViaturaRepository implements IViaturaRepository {
       ]);
 
     if (prefixo) {
-      queryBuilder.where("LOWER(viatura.prefixo) LIKE LOWER(:prefixo)", { prefixo: `%${prefixo}` });
+      queryBuilder.where("LOWER(viatura.prefixo) LIKE LOWER(:prefixo)", {
+        prefixo: `%${prefixo}%`,
+      });
     }
 
     const [result, total] = await queryBuilder

@@ -45,7 +45,7 @@ export class OcorrenciaRepository implements IOcorrenciaRepository {
 
     if (mOcorrencia) {
       query.andWhere("ocorrencia.mOcorrencia ILIKE :mOcorrencia", {
-        mOcorrencia: `%${mOcorrencia}`,
+        mOcorrencia: `%${mOcorrencia}%`,
       });
     }
 
@@ -55,7 +55,7 @@ export class OcorrenciaRepository implements IOcorrenciaRepository {
 
     if (prefixoViatura) {
       query.andWhere("viatura.prefixo ILIKE :prefixoViatura", {
-        prefixoViatura: `%${prefixoViatura}`,
+        prefixoViatura: `%${prefixoViatura}%`,
       });
     }
 
