@@ -9,10 +9,11 @@ export interface IOcorrenciaRepository {
     page: number,
     limit: number,
     mOcorrencia?: string,
+    cidade?: string,
+    bairro?: string,
     prefixoViatura?: string,
     dataHoraInicial?: string,
     dataHoraFinal?: string,
     status?: string
   ): Promise<[Ocorrencia[], number]>;
-  // delete(id: string): Promise<void>;
 }

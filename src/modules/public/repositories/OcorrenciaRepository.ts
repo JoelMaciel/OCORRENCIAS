@@ -18,6 +18,8 @@ export class OcorrenciaRepository implements IOcorrenciaRepository {
     page: number = 1,
     limit: number = 10,
     mOcorrencia?: string,
+    cidade?: string,
+    bairro?: string,
     prefixoViatura?: string,
     dataHoraInicial?: string,
     dataHoraFinal?: string,
@@ -33,6 +35,7 @@ export class OcorrenciaRepository implements IOcorrenciaRepository {
         "ocorrencia.dataHoraInicial",
         "ocorrencia.dataHoraFinal",
         "ocorrencia.status",
+        "ocorrencia.endereco",
       ])
       .leftJoinAndSelect("ocorrencia.corpoGuarda", "corpoGuarda")
       .leftJoinAndSelect("corpoGuarda.comandante", "comandante")
@@ -40,12 +43,25 @@ export class OcorrenciaRepository implements IOcorrenciaRepository {
       .leftJoinAndSelect("ocorrencia.viatura", "viatura")
       .leftJoinAndSelect("ocorrencia.policiaisEnvolvidos", "policiaisEnvolvidos")
       .leftJoinAndSelect("policiaisEnvolvidos.policial", "policial")
+      .leftJoinAndSelect("ocorrencia.endereco", "endereco")
       .skip(skip)
       .take(limit);
 
     if (mOcorrencia) {
       query.andWhere("ocorrencia.mOcorrencia ILIKE :mOcorrencia", {
         mOcorrencia: `%${mOcorrencia}%`,
+      });
+    }
+
+    if (cidade) {
+      query.andWhere("endereco.cidade ILIKE :cidade", {
+        cidade: `%${cidade}%`,
+      });
+    }
+
+    if (cidade && bairro) {
+      query.andWhere("endereco.bairro ILIKE :bairro", {
+        bairro: `%${bairro}%`,
       });
     }
 
@@ -60,14 +76,64 @@ export class OcorrenciaRepository implements IOcorrenciaRepository {
     }
 
     if (dataHoraInicial && dataHoraFinal) {
-      query.andWhere("ocorrencia.dataHoraInicial BETWEEN :dataHoraInicial AND :dataHoraFinal", {
-        dataHoraInicial,
-        dataHoraFinal,
+      const [dateInicial, timeInicial] = dataHoraInicial.split(" ");
+      const formattedDateInicial = dateInicial;
+      const startTime = timeInicial ? timeInicial : "00:00";
+
+      const [dateFinal, timeFinal] = dataHoraFinal.split(" ");
+      const formattedDateFinal = dateFinal;
+      const endTime = timeFinal ? timeFinal : "23:59";
+
+      query.andWhere(
+        "SUBSTRING(ocorrencia.dataHoraInicial FROM 1 FOR 10) >= :formattedDateInicial",
+        {
+          formattedDateInicial,
+        }
+      );
+
+      if (timeInicial) {
+        query.andWhere("SUBSTRING(ocorrencia.dataHoraInicial FROM 12 FOR 5) >= :startTime", {
+          startTime,
+        });
+      }
+
+      query.andWhere("SUBSTRING(ocorrencia.dataHoraInicial FROM 1 FOR 10) <= :formattedDateFinal", {
+        formattedDateFinal,
       });
+
+      if (timeFinal) {
+        query.andWhere("SUBSTRING(ocorrencia.dataHoraInicial FROM 12 FOR 5) <= :endTime", {
+          endTime,
+        });
+      }
     } else if (dataHoraInicial) {
-      query.andWhere("ocorrencia.dataHoraInicial >= :dataHoraInicial", { dataHoraInicial });
+      const [datePart, timePart] = dataHoraInicial.split(" ");
+      const formattedDate = datePart;
+      const startTime = timePart ? timePart : "00:00";
+
+      query.andWhere("SUBSTRING(ocorrencia.dataHoraInicial FROM 1 FOR 10) = :formattedDate", {
+        formattedDate,
+      });
+
+      if (timePart) {
+        query.andWhere("SUBSTRING(ocorrencia.dataHoraInicial FROM 12 FOR 5) >= :startTime", {
+          startTime,
+        });
+      }
     } else if (dataHoraFinal) {
-      query.andWhere("ocorrencia.dataHoraInicial <= :dataHoraFinal", { dataHoraFinal });
+      const [datePart, timePart] = dataHoraFinal.split(" ");
+      const formattedDate = datePart;
+      const endTime = timePart ? timePart : "23:59";
+
+      query.andWhere("SUBSTRING(ocorrencia.dataHoraInicial FROM 1 FOR 10) = :formattedDate", {
+        formattedDate,
+      });
+
+      if (timePart) {
+        query.andWhere("SUBSTRING(ocorrencia.dataHoraInicial FROM 12 FOR 5) <= :endTime", {
+          endTime,
+        });
+      }
     }
 
     return await query.getManyAndCount();

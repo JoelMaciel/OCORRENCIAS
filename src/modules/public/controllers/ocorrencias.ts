@@ -26,6 +26,8 @@ export class OcorrenciasController {
       const page = parseInt(req.query.page as string, 10) || 1;
       const limit = parseInt(req.query.limit as string, 10) || 10;
       const mOcorrencia = req.query.mOcorrencia as string | undefined;
+      const cidade = req.query.cidade as string | undefined;
+      const bairro = req.query.bairro as string | undefined;
       const prefixoViatura = req.query.prefixoViatura as string | undefined;
       const dataHoraInicial = req.query.dataHoraInicial as string | undefined;
       const dataHoraFinal = req.query.dataHoraInicial as string | undefined;
@@ -35,6 +37,8 @@ export class OcorrenciasController {
         page,
         limit,
         mOcorrencia,
+        cidade,
+        bairro,
         prefixoViatura,
         dataHoraInicial,
         dataHoraFinal,
