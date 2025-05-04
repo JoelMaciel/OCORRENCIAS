@@ -4,6 +4,8 @@ import { OcorrenciaResponseDTO } from "../../dtos/response/OcorrenciaResponseDTO
 import { UpdateOcorrenciaInput } from "../../dtos/schemas/UpdateOcorrenciaSchema";
 import OcorrenciaNotFoundException from "../../../../exceptions/OcorrenciaNotFoundException";
 import MOcorrenciaAlredyExistsException from "../../../../exceptions/MOcorrenciaAlreadyExistsException";
+import { toEnderecoEntity } from "../../dtos/converter/EnderecoConverter";
+import { Ocorrencia } from "../../entities/Ocorrencia";
 
 @injectable()
 export class AtualizarOcorrenciaUseCase {
@@ -20,7 +22,9 @@ export class AtualizarOcorrenciaUseCase {
 
     await this.validateMOcorrenciaDuplicado(dto.mOcorrencia);
 
-    const updatedOcorrencia = await this.ocorrenciaRepository.update(id, dto);
+    const updateData = this.prepareDataUpdate(dto);
+
+    const updatedOcorrencia = await this.ocorrenciaRepository.update(id, updateData);
     return new OcorrenciaResponseDTO(updatedOcorrencia);
   }
 
@@ -29,5 +33,12 @@ export class AtualizarOcorrenciaUseCase {
     if (mOcorrenciaDuplicado) {
       throw new MOcorrenciaAlredyExistsException(mOcorrencia);
     }
+  }
+
+  private prepareDataUpdate(dto: UpdateOcorrenciaInput): Partial<Ocorrencia> {
+    return {
+      ...dto,
+      endereco: toEnderecoEntity(dto.endereco),
+    };
   }
 }

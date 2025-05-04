@@ -35,8 +35,8 @@ export class OcorrenciaResponseDTO {
     this.viatura = ocorrencia.viatura ? ocorrencia.viatura.prefixo : null;
     this.policiaisEnvolvidos = ocorrencia.policiaisEnvolvidos
       ? ocorrencia.policiaisEnvolvidos.map((op) => ({
-          nome: op.policial?.nome || "Desconhecido",
-          matricula: op.policial?.matricula || "Sem matrícula",
+          nome: op.policial?.nome,
+          matricula: op.policial?.matricula,
         }))
       : [];
 
@@ -55,8 +55,8 @@ export class OcorrenciaResponseDTO {
     this.registradoPor = ocorrencia.registradoPor
       ? {
           id: ocorrencia.registradoPor.id,
-          nome: ocorrencia.registradoPor.nome || "Desconhecido",
-          matricula: ocorrencia.registradoPor.matricula || "Sem matrícula",
+          nome: ocorrencia.registradoPor.nome,
+          matricula: ocorrencia.registradoPor.matricula,
         }
       : null;
     this.endereco = ocorrencia.endereco

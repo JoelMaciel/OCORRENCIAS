@@ -140,31 +140,20 @@ export class OcorrenciaRepository implements IOcorrenciaRepository {
   }
 
   public async update(id: string, data: Partial<Ocorrencia>): Promise<Ocorrencia> {
-    const ocorrencia = await this.ocorrenciaRepository
-      .createQueryBuilder("ocorrencia")
-      .leftJoinAndSelect("ocorrencia.corpoGuarda", "corpoGuarda")
-      .leftJoinAndSelect("corpoGuarda.comandante", "comandante")
-      .leftJoinAndSelect("ocorrencia.policiaisEnvolvidos", "policiaisEnvolvidos")
-      .leftJoinAndSelect("policiaisEnvolvidos.policial", "policial")
-      .where("ocorrencia.id = :id", { id })
-      .getOneOrFail();
-
-    await this.ocorrenciaRepository
-      .createQueryBuilder()
-      .update(Ocorrencia)
-      .set(data)
-      .where("id = :id", { id })
-      .execute();
-
-    return await this.ocorrenciaRepository.findOneOrFail({
+    const ocorrencia = await this.ocorrenciaRepository.findOneOrFail({
       where: { id },
       relations: [
         "corpoGuarda",
         "corpoGuarda.comandante",
         "policiaisEnvolvidos",
         "policiaisEnvolvidos.policial",
+        "endereco",
       ],
     });
+
+    this.ocorrenciaRepository.merge(ocorrencia, data);
+    await this.ocorrenciaRepository.save(ocorrencia);
+    return ocorrencia;
   }
 
   public async findById(id: string): Promise<Ocorrencia | null> {
