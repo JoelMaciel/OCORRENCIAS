@@ -27,6 +27,7 @@ export const UpdateOcorrenciaSchema = z.object({
   resumo: z
     .string({ required_error: "O campo 'resumo' é obrigatório." })
     .min(15, { message: "O campo não pode estar vazio" }),
+  endereco: EnderecoSchema,
 });
 
 export type UpdateOcorrenciaInput = z.infer<typeof UpdateOcorrenciaSchema>;

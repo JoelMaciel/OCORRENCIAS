@@ -72,6 +72,12 @@ export class Policial {
   })
   ocorrenciasEnvolvidas: OcorrenciaPolicial[];
 
+  @OneToMany(() => Ocorrencia, (ocorrencia) => ocorrencia.fiscal)
+  ocorrenciasFiscal: Ocorrencia[];
+
+  @OneToMany(() => Ocorrencia, (ocorrencia) => ocorrencia.supervisor)
+  ocorrenciasSupervisor: Ocorrencia[];
+
   @ManyToMany(() => Role)
   @JoinTable({
     name: "policia_roles",
