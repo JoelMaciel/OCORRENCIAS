@@ -43,6 +43,8 @@ export class OcorrenciaRepository implements IOcorrenciaRepository {
       .leftJoinAndSelect("ocorrencia.viatura", "viatura")
       .leftJoinAndSelect("ocorrencia.policiaisEnvolvidos", "policiaisEnvolvidos")
       .leftJoinAndSelect("policiaisEnvolvidos.policial", "policial")
+      .leftJoinAndSelect("ocorrencia.fiscal", "fiscal")
+      .leftJoinAndSelect("ocorrencia.supervisor", "supervisor")
       .leftJoinAndSelect("ocorrencia.endereco", "endereco")
       .skip(skip)
       .take(limit);
@@ -163,6 +165,8 @@ export class OcorrenciaRepository implements IOcorrenciaRepository {
       .leftJoinAndSelect("corpoGuarda.comandante", "comandante")
       .leftJoinAndSelect("ocorrencia.policiaisEnvolvidos", "policiaisEnvolvidos")
       .leftJoinAndSelect("ocorrencia.registradoPor", "registradoPor")
+      .leftJoinAndSelect("ocorrencia.fiscal", "fiscal")
+      .leftJoinAndSelect("ocorrencia.supervisor", "supervisor")
       .leftJoinAndSelect("policiaisEnvolvidos.policial", "policial")
       .leftJoinAndSelect("ocorrencia.viatura", "viatura")
       .leftJoinAndSelect("ocorrencia.endereco", "endereco")
@@ -190,10 +194,20 @@ export class OcorrenciaRepository implements IOcorrenciaRepository {
         "comandante.nome",
         "policiaisEnvolvidos.id",
         "policial.matricula",
+        "policial.postoGraduacao",
         "policial.nome",
         "registradoPor.id",
         "registradoPor.nome",
         "registradoPor.matricula",
+        "registradoPor.postoGraduacao",
+        "fiscal.id",
+        "fiscal.nome",
+        "fiscal.postoGraduacao",
+        "fiscal.matricula",
+        "supervisor.id",
+        "supervisor.nome",
+        "supervisor.postoGraduacao",
+        "supervisor.matricula",
         "viatura.id",
         "viatura.prefixo",
         "endereco.id",

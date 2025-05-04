@@ -73,6 +73,14 @@ export class Ocorrencia {
   })
   policiaisEnvolvidos: OcorrenciaPolicial[];
 
+  @ManyToOne(() => Policial, (policial) => policial.ocorrenciasFiscal)
+  @JoinColumn({ name: "fiscal_id" })
+  fiscal: Policial;
+
+  @ManyToOne(() => Policial, (policial) => policial.ocorrenciasSupervisor)
+  @JoinColumn({ name: "supervisor_id" })
+  supervisor: Policial;
+
   @OneToOne(() => Viatura, (viatura) => viatura.ocorrencia)
   viatura: Viatura;
 
