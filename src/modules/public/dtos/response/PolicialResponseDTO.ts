@@ -5,6 +5,7 @@ export class PolicialResponseDTO {
   nome: string;
   matricula: string;
   postoGraduacao: string;
+  dataAdmissao: Date;
   cpf: string;
   contato: string;
   email: string;
@@ -17,6 +18,7 @@ export class PolicialResponseDTO {
     this.nome = policial.nome;
     this.matricula = policial.matricula;
     this.postoGraduacao = policial.postoGraduacao;
+    this.dataAdmissao = policial.dataAdmissao;
     this.cpf = policial.cpf;
     this.contato = policial.contato;
     this.email = policial.email;

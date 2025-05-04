@@ -33,6 +33,7 @@ export class PolicialRepository implements IPolicialRepository {
         "policial.contato",
         "policial.email",
         "policial.postoGraduacao",
+        "policial.dataAdmissao",
         "batalhao.nome",
       ])
       .where("policial.id = :id", { id })
@@ -78,6 +79,7 @@ export class PolicialRepository implements IPolicialRepository {
         "policial.contato",
         "policial.email",
         "policial.postoGraduacao",
+        "policial.dataAdmissao",
         "policial.createdAt",
         "policial.updatedAt",
         "batalhao.nome",
