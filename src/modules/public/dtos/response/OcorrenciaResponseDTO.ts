@@ -18,6 +18,16 @@ export class OcorrenciaResponseDTO {
   numeroProcedimento: string;
   comandanteGuarda: string | null;
   registradoPor: { id: string; nome: string; matricula: string } | null;
+  endereco: {
+    id: string;
+    rua: string;
+    numero: string;
+    complemento?: string;
+    bairro: string;
+    cidade: string;
+    uf: string;
+    cep: string;
+  } | null;
 
   constructor(ocorrencia: Ocorrencia) {
     this.id = ocorrencia.id;
@@ -47,6 +57,18 @@ export class OcorrenciaResponseDTO {
           id: ocorrencia.registradoPor.id,
           nome: ocorrencia.registradoPor.nome || "Desconhecido",
           matricula: ocorrencia.registradoPor.matricula || "Sem matrícula",
+        }
+      : null;
+    this.endereco = ocorrencia.endereco
+      ? {
+          id: ocorrencia.endereco.id,
+          rua: ocorrencia.endereco.rua,
+          numero: ocorrencia.endereco.numero,
+          complemento: ocorrencia.endereco.complemento ?? undefined,
+          bairro: ocorrencia.endereco.bairro,
+          cidade: ocorrencia.endereco.cidade,
+          uf: ocorrencia.endereco.uf,
+          cep: ocorrencia.endereco.cep,
         }
       : null;
   }

@@ -176,6 +176,7 @@ export class OcorrenciaRepository implements IOcorrenciaRepository {
       .leftJoinAndSelect("ocorrencia.registradoPor", "registradoPor")
       .leftJoinAndSelect("policiaisEnvolvidos.policial", "policial")
       .leftJoinAndSelect("ocorrencia.viatura", "viatura")
+      .leftJoinAndSelect("ocorrencia.endereco", "endereco")
       .select([
         "ocorrencia.id",
         "ocorrencia.mOcorrencia",
@@ -206,6 +207,14 @@ export class OcorrenciaRepository implements IOcorrenciaRepository {
         "registradoPor.matricula",
         "viatura.id",
         "viatura.prefixo",
+        "endereco.id",
+        "endereco.rua",
+        "endereco.numero",
+        "endereco.complemento",
+        "endereco.bairro",
+        "endereco.cidade",
+        "endereco.uf",
+        "endereco.cep",
       ])
       .where("ocorrencia.id = :id", { id })
       .getOne();
