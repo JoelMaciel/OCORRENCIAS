@@ -15,6 +15,7 @@ export class CriarBatalhaoUseCase {
 
     const batalhaoData = {
       nome: dto.nome,
+      contato: dto.contato,
       endereco: endereco,
     };
 

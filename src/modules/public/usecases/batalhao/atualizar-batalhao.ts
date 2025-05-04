@@ -26,6 +26,7 @@ export class AtualizarBatalhaoUseCase {
 
     const updatedData = {
       nome: dto.nome || batalhao.nome,
+      contato: dto.contato,
       endereco: endereco,
     };
 

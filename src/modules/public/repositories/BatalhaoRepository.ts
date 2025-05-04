@@ -34,7 +34,7 @@ export class BatalhaoRepository implements IBatalhaoRepository {
       .leftJoinAndSelect("batalhao.endereco", "endereco");
 
     if (nome) {
-      queryBuilder.where("LOWER(batalhao.nome) LIKE LOWER(:nome)", { nome: `%${nome}` });
+      queryBuilder.where("LOWER(batalhao.nome) LIKE LOWER(:nome)", { nome: `%${nome}%` });
     }
 
     const [result, total] = await queryBuilder
