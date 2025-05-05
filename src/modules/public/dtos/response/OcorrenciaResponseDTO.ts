@@ -1,4 +1,5 @@
 import { Ocorrencia } from "../../entities/Ocorrencia";
+import { StatusOcorrencia } from "../../enums/StatusOcorrencia";
 
 export class OcorrenciaResponseDTO {
   id: string;
@@ -10,7 +11,7 @@ export class OcorrenciaResponseDTO {
   tipoOcorrencia: string;
   artigo: string;
   resumo: string;
-  status: string;
+  status: StatusOcorrencia;
   createdAt: Date;
   updatedAt: Date;
   dataHoraInicial: string;
