@@ -50,7 +50,7 @@ export class Ocorrencia {
   @Column({
     type: "enum",
     enum: StatusOcorrencia,
-    default: StatusOcorrencia.PENDENTE,
+    default: StatusOcorrencia.EM_ANDAMENTO,
   })
   status: StatusOcorrencia;
 

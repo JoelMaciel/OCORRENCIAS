@@ -7,6 +7,9 @@ import { BuscarOcorrenciaUseCase } from "../usecases/ocorrencia/buscar-ocorrenci
 import { AtualizarOcorrenciaUseCase } from "../usecases/ocorrencia/atualizar-ocorrencia";
 import { UpdateOcorrenciaSchema } from "../dtos/schemas/UpdateOcorrenciaSchema";
 import { ListarOcorrenciasUseCase } from "../usecases/ocorrencia/listar-ocorrencia";
+import { StatusOcorrencia } from "../enums/StatusOcorrencia";
+import { AtualizarStatusConcluidaUseCase } from "../usecases/ocorrencia/atualizar-status-concluida";
+import { AtualizarStatusCanceladaUseCase } from "../usecases/ocorrencia/atualizar-status-cancelada";
 
 export class OcorrenciasController {
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -70,6 +73,28 @@ export class OcorrenciasController {
       const { id } = req.params;
       const ocorrencia = await buscarOcorrenciaUseCase.execute(id);
       res.status(200).json(ocorrencia);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async statusConcluded(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { id } = req.params;
+      const atualizarStatusConcluidaUseCase = container.resolve(AtualizarStatusConcluidaUseCase);
+      await atualizarStatusConcluidaUseCase.execute(id, StatusOcorrencia.CONCLUIDA);
+      res.status(200).json({ message: "Ocorrência concluída com sucesso" });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async statusCanceled(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { id } = req.params;
+      const atualizarStatusCanceladaUseCase = container.resolve(AtualizarStatusCanceladaUseCase);
+      await atualizarStatusCanceladaUseCase.execute(id, StatusOcorrencia.CANCELADA);
+      res.status(200).json({ message: "Ocorrência cancelada com sucesso" });
     } catch (error) {
       next(error);
     }
