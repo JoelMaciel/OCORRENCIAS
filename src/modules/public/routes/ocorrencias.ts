@@ -9,5 +9,7 @@ ocorrenciasRoutes.post("/", ocorrenciasController.create);
 ocorrenciasRoutes.get("/:id", ocorrenciasController.findById);
 ocorrenciasRoutes.patch("/:id", ocorrenciasController.update);
 ocorrenciasRoutes.get("/", ocorrenciasController.findAll);
+ocorrenciasRoutes.patch("/:id/concluir", ocorrenciasController.statusConcluded);
+ocorrenciasRoutes.patch("/:id/cancelar", ocorrenciasController.statusCanceled);
 
 export { ocorrenciasRoutes };
