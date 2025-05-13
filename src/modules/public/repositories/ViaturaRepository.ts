@@ -45,6 +45,12 @@ export class ViaturaRepository implements IViaturaRepository {
       .getOne();
   }
 
+  public async prefixExists(prefixo: string): Promise<boolean> {
+    return await this.viaturaRepository.exists({
+      where: { prefixo },
+    });
+  }
+
   public async findAll(
     page: number,
     limit: number,
