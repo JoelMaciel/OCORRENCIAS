@@ -5,6 +5,7 @@ import { ViaturaResponseDTO } from "../../dtos/response/ViaturaResponseDTO";
 import { IBatalhaoRepository } from "../../repositories/interfaces/IBatalhaoRepository";
 import { StatusViatura } from "../../enums/StatusViatura";
 import BatalhaoNotFoundException from "../../../../exceptions/BatalhaoNotFoundException ";
+import PrefixoAlreadyExistsException from "../../../../exceptions/PrefixoAlreadyExistsException";
 
 @injectable()
 export class CriarViaturaUseCase {
@@ -19,6 +20,7 @@ export class CriarViaturaUseCase {
     if (!batalhao) {
       throw new BatalhaoNotFoundException();
     }
+    await this.validatePrefixo(dto.prefixo);
 
     const dataViatura = {
       prefixo: dto.prefixo,
@@ -30,5 +32,12 @@ export class CriarViaturaUseCase {
 
     const savedViatura = await this.viaturaRepository.create(dataViatura);
     return new ViaturaResponseDTO(savedViatura);
+  }
+
+  private async validatePrefixo(prefixo: string): Promise<void> {
+    const existsPrefixo = await this.viaturaRepository.prefixExists(prefixo);
+    if (existsPrefixo) {
+      throw new PrefixoAlreadyExistsException();
+    }
   }
 }
