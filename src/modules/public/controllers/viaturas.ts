@@ -32,8 +32,9 @@ export class ViaturasController {
     const page = parseInt(req.query.page as string, 10) || 1;
     const limit = parseInt(req.query.limit as string, 10) || 10;
     const prefixo = req.query.prefixo as string | undefined;
+    const status = req.query.status as string | undefined;
 
-    const viaturas = await listarViaturasUse.execute(page, limit, prefixo);
+    const viaturas = await listarViaturasUse.execute(page, limit, prefixo, status);
     resp.status(200).json(viaturas);
   }
 

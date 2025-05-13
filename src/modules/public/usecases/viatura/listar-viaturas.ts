@@ -12,14 +12,15 @@ export class ListarViaturasUseCase {
   public async execute(
     page: number,
     limit: number,
-    prefixo?: string
+    prefixo?: string,
+    status?: string
   ): Promise<{
     viaturas: ViaturaResponseDTO[];
     total: number;
     page: number;
     totalPages: number;
   }> {
-    const [viaturas, total] = await this.viaturaRepository.findAll(page, limit, prefixo);
+    const [viaturas, total] = await this.viaturaRepository.findAll(page, limit, prefixo, status);
 
     const totalPages = Math.ceil(total / limit);
 

@@ -54,7 +54,8 @@ export class ViaturaRepository implements IViaturaRepository {
   public async findAll(
     page: number,
     limit: number,
-    prefixo?: string
+    prefixo?: string,
+    status?: string
   ): Promise<[Viatura[], number]> {
     const queryBuilder = this.viaturaRepository
       .createQueryBuilder("viatura")
@@ -73,6 +74,12 @@ export class ViaturaRepository implements IViaturaRepository {
     if (prefixo) {
       queryBuilder.where("LOWER(viatura.prefixo) LIKE LOWER(:prefixo)", {
         prefixo: `%${prefixo}%`,
+      });
+    }
+
+    if (status) {
+      queryBuilder.andWhere("LOWER(CAST(viatura.status AS text)) LIKE LOWER(:status)", {
+        status: `%${status}%`,
       });
     }
 
