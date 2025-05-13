@@ -11,5 +11,6 @@ viaturasRoutes.get("/:id", viaturasController.findById);
 viaturasRoutes.get("/", viaturasController.findAll);
 viaturasRoutes.put("/:id", viaturasController.update);
 viaturasRoutes.patch("/vincula-ocorrencia", viaturasController.vincularOcorrencia);
+viaturasRoutes.patch("/:id/atualiza-status", viaturasController.updateStatus);
 
 export { viaturasRoutes };

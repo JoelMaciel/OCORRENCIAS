@@ -19,7 +19,7 @@ export class ViaturaRepository implements IViaturaRepository {
     return updatedViatura;
   }
 
-  public async vincularOcorrencia(viaturaId: string, ocorrenciaId: string): Promise<void> {
+  public async linkOccurrence(viaturaId: string, ocorrenciaId: string): Promise<void> {
     await this.viaturaRepository
       .createQueryBuilder()
       .update(Viatura)

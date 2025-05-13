@@ -23,6 +23,6 @@ export class VincularOcorrenciaAViaturaUseCase {
       throw new OcorrenciaNotFoundException();
     }
 
-    await this.viaturaRepository.vincularOcorrencia(dto.viaturaId, dto.ocorrenciaId);
+    await this.viaturaRepository.linkOccurrence(dto.viaturaId, dto.ocorrenciaId);
   }
 }

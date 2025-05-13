@@ -6,5 +6,5 @@ export interface IViaturaRepository {
   findById(id: string): Promise<Viatura | null>;
   findAll(page: number, limit: number, prefixo?: string): Promise<[Viatura[], number]>;
   delete(id: string): Promise<void>;
-  vincularOcorrencia(viaturaId: string, ocorrenciaId: string): Promise<void>;
+  linkOccurrence(viaturaId: string, ocorrenciaId: string): Promise<void>;
 }

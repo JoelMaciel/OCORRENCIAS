@@ -9,8 +9,9 @@ import { ValidationSchema } from "../dtos/validation/ValidateSchema";
 import { CreateViaturaSchema } from "../dtos/schemas/CreateViaturaSchema";
 import { VincularOcorrenciaAViaturaUseCase } from "../usecases/viatura/vincular-ocorrencia";
 import { VincularOcorrenciaSchema } from "../dtos/schemas/VincularOcorrenciaSchema";
-import { json } from "stream/consumers";
 import { UpdateViaturaSchema } from "../dtos/schemas/UpdateViaturaSchema";
+import { AtualizarStatusViaturaUseCase } from "../usecases/viatura/atualizar-status";
+import { UpdateStatusViaturaSchema } from "../dtos/schemas/UpdateStatusViaturaSchema";
 
 export class ViaturasController {
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -85,6 +86,21 @@ export class ViaturasController {
 
       await deletarViaturaUseCase.execute(id);
       res.status(204).send();
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async updateStatus(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { id } = req.params;
+      const atualizarStatusViaturaUseCase = container.resolve(AtualizarStatusViaturaUseCase);
+      const dto = await ValidationSchema.validate(UpdateStatusViaturaSchema, req.body);
+
+      await atualizarStatusViaturaUseCase.execute(id, dto.status);
+      res.status(200).json({
+        message: "Status da viatura atualizado com sucesso.",
+      });
     } catch (error) {
       next(error);
     }
