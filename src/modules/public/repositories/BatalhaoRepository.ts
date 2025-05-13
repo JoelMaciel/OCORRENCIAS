@@ -5,18 +5,24 @@ import { IBatalhaoRepository } from "./interfaces/IBatalhaoRepository";
 export class BatalhaoRepository implements IBatalhaoRepository {
   constructor(private readonly batalhaoRepository = AppDataSource.getRepository(Batalhao)) {}
 
-  public async create(data: Partial<Batalhao>): Promise<Batalhao> {
+  async create(data: Partial<Batalhao>): Promise<Batalhao> {
     const newBatalhao = this.batalhaoRepository.create(data);
     return await this.batalhaoRepository.save(newBatalhao);
   }
 
-  public async findById(id: string): Promise<Batalhao | null> {
+  async nameExists(nome: string): Promise<boolean> {
+    return await this.batalhaoRepository.exists({
+      where: { nome },
+    });
+  }
+
+  async findById(id: string): Promise<Batalhao | null> {
     return await this.batalhaoRepository.findOne({
       where: { id },
     });
   }
 
-  public async update(id: string, data: Partial<Batalhao>): Promise<Batalhao> {
+  async update(id: string, data: Partial<Batalhao>): Promise<Batalhao> {
     const batalhao = await this.batalhaoRepository.findOneOrFail({
       where: { id },
     });
@@ -28,7 +34,7 @@ export class BatalhaoRepository implements IBatalhaoRepository {
     return batalhaoUpdated;
   }
 
-  public async findAll(page: number, limit: number, nome?: string): Promise<[Batalhao[], number]> {
+  async findAll(page: number, limit: number, nome?: string): Promise<[Batalhao[], number]> {
     const queryBuilder = this.batalhaoRepository
       .createQueryBuilder("batalhao")
       .leftJoinAndSelect("batalhao.endereco", "endereco");
@@ -45,7 +51,7 @@ export class BatalhaoRepository implements IBatalhaoRepository {
     return [result, total];
   }
 
-  public async delete(id: string): Promise<void> {
+  async delete(id: string): Promise<void> {
     await this.batalhaoRepository.delete(id);
   }
 }

@@ -19,7 +19,7 @@ export class ViaturaRepository implements IViaturaRepository {
     return updatedViatura;
   }
 
-  public async vincularOcorrencia(viaturaId: string, ocorrenciaId: string): Promise<void> {
+  public async linkOccurrence(viaturaId: string, ocorrenciaId: string): Promise<void> {
     await this.viaturaRepository
       .createQueryBuilder()
       .update(Viatura)
@@ -43,6 +43,12 @@ export class ViaturaRepository implements IViaturaRepository {
       ])
       .where("viatura.id = :id", { id })
       .getOne();
+  }
+
+  public async prefixExists(prefixo: string): Promise<boolean> {
+    return await this.viaturaRepository.exists({
+      where: { prefixo },
+    });
   }
 
   public async findAll(
